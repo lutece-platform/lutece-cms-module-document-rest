@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?><plug-in>
+    <!-- Plugin Informations -->
+    <name>document-rest</name>
+    <class>fr.paris.lutece.portal.service.plugin.PluginDefaultImplementation</class>
+    <version>1.0.2</version>
+    <documentation/>
+    <installation/>
+    <changes/>
+    <user-guide/>
+    <description>module.document.rest.module.description</description>
+    <provider>module.document.rest.module.provider</provider>
+    <provider-url>http://lutece.paris.fr</provider-url>
+    <icon-url>images/admin/skin/plugins/document/modules/rest/document-rest.png</icon-url>
+    <copyright>Copyright 2001-2011 Mairie de Paris</copyright>
+    <core-version-dependency>
+        <min-core-version>2.4.0</min-core-version>
+        <max-core-version/>
+    </core-version-dependency>
+    <db-pool-required>0</db-pool-required>
+
+	<!-- REST security : Comment the filters if you want to test the REST service with the given JSP -->
+	<filters>
+		
+       <filter>
+           <filter-name>documentRestSecurity</filter-name>
+           <url-pattern>/rest/document/*</url-pattern>
+           <filter-class>fr.paris.lutece.util.signrequest.servlet.HeaderHashRequestFilter</filter-class>
+
+		   <init-param>
+               <param-name>elementsSignature</param-name>
+               <param-value></param-value>
+           </init-param>
+           
+           <init-param>
+               <param-name>validityTimePeriod</param-name>
+               <param-value>0</param-value>
+           </init-param>
+
+           <init-param>
+               <param-name>privateKey</param-name>
+               <param-value>changeMe</param-value>
+           </init-param>
+       </filter>
+       
+   </filters>
+</plug-in>

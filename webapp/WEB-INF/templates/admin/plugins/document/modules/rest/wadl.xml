@@ -1,0 +1,142 @@
+<?xml version="1.0"?>
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://wadl.dev.java.net/2009/02 wadl.xsd"
+xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <resources base="${base_url}">
+    
+    	<!-- Get spaces -->
+        <resource path="getuserspaces/{id_user}">
+            <method name="GET" >
+                <response>
+                    <representation mediaType="application/xml"/>
+                </response>
+            </method>
+        </resource>
+        
+        <!-- Get space -->
+        <resource path="getspace/{id_space}">
+            <method name="GET" >
+                <response>
+                    <representation mediaType="application/xml"/>
+                </response>
+            </method>
+        </resource>
+        
+        <!-- Get Documents list -->
+        <resource path="getdocumentslistbyspace/{id_space}">
+            <method name="GET" >
+                <response>
+                    <representation mediaType="application/xml"/>
+                </response>
+            </method>
+        </resource>
+        
+        <!-- Get Document -->
+        <resource path="getdocument/{id_document}">
+            <method name="GET" >
+                <response>
+                    <representation mediaType="application/xml"/>
+                </response>
+            </method>
+        </resource>
+        
+        <!-- Get Document fields to create it -->
+        <resource path="getcreationdocumentfields/{code_document_type}">
+            <method name="GET" >
+                <response>
+                    <representation mediaType="application/xml"/>
+                </response>
+            </method>
+        </resource>
+        
+        <!-- Get Document fields to create it -->
+        <resource path="doremovedocument/{id_document}">
+            <method name="DELETE" >
+                <response>
+                    <representation mediaType="application/xml"/>
+                </response>
+            </method>
+        </resource>
+        
+        <resource path="getportletstoassigndocument/{id_document}">
+            <method name="GET" >
+                <response>
+                    <representation mediaType="application/xml"/>
+                </response>
+            </method>
+        </resource>
+        
+        <resource path="getportletslisttoassigndocument/{id_document}">
+            <method name="GET" >
+                <response>
+                    <representation mediaType="application/xml"/>
+                </response>
+            </method>
+        </resource>
+        
+        <resource path="getportletsdocumentassigned/{id_document}">
+            <method name="GET" >
+                <response>
+                    <representation mediaType="application/xml"/>
+                </response>
+            </method>
+        </resource>
+        
+        <resource path="doassigndocumentportlet/">
+            <method name="POST" >
+                <request>
+                    <representation mediaType="application/x-www-form-urlencoded">
+                    	<param name="id_document" type="xsd:string" style="query" required="true"/>
+                        <param name="id_portlet" type="xsd:string" style="query" required="true"/>
+                    </representation>
+                </request>
+            </method>
+        </resource>
+        
+        <resource path="dounassigndocumentportlet/">
+            <method name="POST" >
+                <request>
+                    <representation mediaType="application/x-www-form-urlencoded">
+                    	<param name="id_document" type="xsd:string" style="query" required="true"/>
+                        <param name="id_portlet" type="xsd:string" style="query" required="true"/>
+                    </representation>
+                </request>
+            </method>
+        </resource>
+        
+        <resource path="dopublishdocument/">
+            <method name="POST" >
+                <request>
+                    <representation mediaType="application/x-www-form-urlencoded">
+                    	<param name="id_document" type="xsd:string" style="query" required="true"/>
+                        <param name="id_portlet" type="xsd:string" style="query" required="true"/>
+                    </representation>
+                </request>
+            </method>
+        </resource>
+        
+        <resource path="dounpublishdocument/">
+            <method name="POST" >
+                <request>
+                    <representation mediaType="application/x-www-form-urlencoded">
+                    	<param name="id_document" type="xsd:string" style="query" required="true"/>
+                        <param name="id_portlet" type="xsd:string" style="query" required="true"/>
+                    </representation>
+                </request>
+            </method>
+        </resource>
+        
+        <resource path="docreatedocument/">
+        	<method name="POST">
+        		<request>
+                    <representation mediaType="multipart/form-data">                    	
+                    </representation>
+                </request>
+        	</method>        
+        </resource>
+                
+    </resources>
+    
+</application>
+

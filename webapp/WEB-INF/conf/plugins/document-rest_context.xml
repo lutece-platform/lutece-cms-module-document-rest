@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd" >
+
+    <!-- REST -->
+    <bean id="document-rest.documentRest" class="fr.paris.lutece.plugins.document.modules.rest.rs.DocumentRest" />
+    
+    <!-- Formatters -->
+	<bean id="document-rest.documentFormatterXml" class="fr.paris.lutece.plugins.document.modules.rest.service.formatters.DocumentFormatterXml"/>	
+	<bean id="document-rest.spaceFormatterXml" class="fr.paris.lutece.plugins.document.modules.rest.service.formatters.SpaceFormatterXml"/>
+	<bean id="document-rest.documentPublicationFormatterXml" class="fr.paris.lutece.plugins.document.modules.rest.service.formatters.DocumentPublicationFormatterXml"/>
+	<bean id="document-rest.referenceItemFormatterXml" class="fr.paris.lutece.plugins.document.modules.rest.service.formatters.ReferenceItemFormatterXml"/>
+	
+	<!-- Writers -->
+	<bean id="document-rest.documentWriter" class="fr.paris.lutece.plugins.document.modules.rest.service.writers.DocumentWriter" scope="singleton">
+		<property name="formatters">
+			<map>
+				<entry key="application/xml" value-ref="document-rest.documentFormatterXml" />
+			</map>
+		</property>
+	</bean>
+	<bean id="document-rest.spaceWriter" class="fr.paris.lutece.plugins.document.modules.rest.service.writers.SpaceWriter" scope="singleton">
+		<property name="formatters">
+			<map>
+				<entry key="application/xml" value-ref="document-rest.spaceFormatterXml" />
+			</map>
+		</property>
+	</bean>
+	<bean id="document-rest.documentPublicationWriter" class="fr.paris.lutece.plugins.document.modules.rest.service.writers.DocumentPublicationWriter" scope="singleton">
+		<property name="formatters">
+			<map>
+				<entry key="application/xml" value-ref="document-rest.documentPublicationFormatterXml" />
+			</map>
+		</property>
+	</bean>
+	<bean id="document-rest.referenceItemWriter" class="fr.paris.lutece.plugins.document.modules.rest.service.writers.ReferenceItemWriter" scope="singleton">
+		<property name="formatters">
+			<map>
+				<entry key="application/xml" value-ref="document-rest.referenceItemFormatterXml" />
+			</map>
+		</property>
+	</bean>
+    
+</beans>
