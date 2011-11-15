@@ -2,7 +2,7 @@
     <!-- Plugin Informations -->
     <name>document-rest</name>
     <class>fr.paris.lutece.portal.service.plugin.PluginDefaultImplementation</class>
-    <version>1.0.2</version>
+    <version>1.0.0</version>
     <documentation/>
     <installation/>
     <changes/>
@@ -28,7 +28,7 @@
 
 		   <init-param>
                <param-name>elementsSignature</param-name>
-               <param-value></param-value>
+               <param-value/>
            </init-param>
            
            <init-param>
