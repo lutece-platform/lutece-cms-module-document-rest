@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+    <properties>
+        <title>REST module for Directory plugin</title>
+    </properties>
+    <body>
+        <section name="REST module for Directory plugin">
+            <subsection name="Overview">
+                <p>
+                    This module provides REST web services to access to
+                    directory's plugin data.
+                </p>
+                <p>
+                    This module implements the 4 basic REST methods GET method and delivers data as XML or JSON format :
+                </p>
+				<ul>
+					<li>
+						<strong>Method GET : </strong>delivers data as XML or JSON format
+					</li>
+					<li>
+						<strong>Method POST : </strong>create or complete a record
+					</li>
+					<li>
+						<strong>Method PUT : </strong>update a record
+					</li>
+					<li>
+						<strong>Method DELETE : </strong>delete a record
+					</li>
+				</ul>
+            </subsection>
+        </section>
+    </body>
+</document>

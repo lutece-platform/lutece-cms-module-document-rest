@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+    <properties>
+        <title>Module REST pour le plugin Directory</title>
+    </properties>
+    <body>
+        <section name="Module REST pour le plugin Document">
+            <subsection name="Introduction">
+                <p>
+                    Ce module permet la gestion, sous forme de web services REST
+	            	les documents g&#233;n&#233;r&#233;s dans le  plugin Document. 
+                </p>
+                <p>
+                    Ce module impl&#233;mente les 4 m&#233;thodes basiques REST :
+                </p>
+				<ul>
+					<li>
+						<strong>M&#233;thode GET : </strong>produit les informations au format XML
+					</li>
+					<li>
+						<strong>M&#233;thode POST : </strong>cr&#233;e, modifie ou produit une action sur un document
+					</li>
+					<li>
+						<strong>M&#233;thode DELETE : </strong>supprime un document
+					</li>
+				</ul>
+            </subsection>
+        </section>
+    </body>
+</document>

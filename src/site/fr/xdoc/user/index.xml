@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+    <properties>
+        <title>Utilisation</title>
+    </properties>
+    <body>
+        <section name="Utilisation">
+            <subsection name="Plugin de test">
+                <p>
+                	Il existe un plugin permettant d'effectuer des tests sur le module-document-rest: plugin-testlibrairy.
+                	Ce dernier a besoin de: librairy-document-client.
+                </p>
+                <p>
+                	<strong>Note : </strong>pour son utilisation, lire ...
+                </p>
+            </subsection>
+            <subsection name="Syntaxe des URLs">
+            	<h3>R&#233;cup&#233;rer les informations concernant un document au format XML</h3>
+            	<ul>
+            		<li>Pour obtenir la liste des espaces :</li>
+            	</ul>
+            	<div class="source">
+					<pre>
+						http://myhost/mywebapp/rest/document/getuserspaces/{id_user}
+					</pre>
+				</div>
+				<p>
+					Description du XML en r&#233;ponse:	
+					<ul>
+						<li>&lt;space&gt;...&lt;/space&gt;: balise contenant les informations d'un espace</li>
+						<li>&lt;space-id&gt;...&lt;/space&gt;: balise contenant l'id</li>
+						<li>&lt;name&gt;...&lt;/name&gt;: balise contenant le nom</li>
+						<li>&lt;description&gt;...&lt;/description&gt;: balise contenant la description</li>
+						<li>&lt;space-icon-url&gt;...&lt;/space-icon-url&gt;: balise contenant l'url de l'icone</li>
+						<li>&lt;child-spaces&gt;...&lt;/child-spaces&gt;: balise contenant les espaces enfants</li>					
+					</ul>				
+				</p>
+				<ul>
+            		<li>Pour obtenir les informations d'un espace :</li>
+            	</ul>
+				<div class="source">
+					<pre>
+						http://myhost/mywebapp/rest/document/getspace/{id_space}
+					</pre>
+            	</div>
+            	<p>
+					Description du XML en r&#233;ponse:	
+					<ul>
+						<li>&lt;space&gt;...&lt;/space&gt;: balise contenant les informations d'un espace</li>
+						<li>&lt;space-id&gt;...&lt;/space&gt;: balise contenant l'id</li>
+						<li>&lt;name&gt;...&lt;/name&gt;: balise contenant le nom</li>
+						<li>&lt;description&gt;...&lt;/description&gt;: balise contenant la description</li>
+						<li>&lt;space-id-icon&gt;...&lt;/space-id-icon&gt;: balise contenant l'id de l'icone</li>	
+						<li>&lt;space-icon-url&gt;...&lt;/space-icon-url&gt;: balise contenant l'url de l'icone</li>
+						<li>&lt;space-allowed-document-types&gt;...&lt;/space-allowed-document-types&gt;: balise contenant la liste des documents autoris&#233;s</li>
+						<li>&lt;space-document-creation-allowed&gt;...&lt;/space-document-creation-allowed&gt;: balise contenant true s'il est possible de cr&#233;er un document, false dans le cas contraire</li>
+						<li>&lt;document-type&gt;...&lt;/document-type&gt;: balise contenant le type d'un document</li>
+						<li>&lt;space-workgroup&gt;...&lt;/space-workgroup&gt;: balise contenant l'information sur le workgroup</li>
+					</ul>				
+				</p>
+            	<ul>
+            		<li>Pour obtenir la liste des documents d'un espace :</li>
+            	</ul>
+				<div class="source">
+					<pre>
+						http://myhost/mywebapp/rest/document/getdocumentslistbyspace/{id_space}
+					</pre>
+            	</div>
+            	<p>
+					Description du XML en r&#233;ponse:	
+					<ul>
+						<li>&lt;Documents&gt;...&lt;/Documents&gt;: balise contenant la liste des documents pr&#233;sents dans l'espace</li>
+						<li>&lt;Id-document&gt;...&lt;/Id-document&gt;: balise contenant l'id du document</li>
+					</ul>				
+				</p>
+            	<ul>
+            		<li>Pour obtenir les informations d'un document :</li>
+            	</ul>
+				<div class="source">
+					<pre>
+						http://myhost/mywebapp/rest/document/getdocument/{id_document}
+					</pre>
+            	</div>
+            	<p>
+					Description du XML en r&#233;ponse:	
+					<ul>
+						<li>&lt;Document&gt;...&lt;/Document&gt;: balise contenant les informations du document</li>
+						<li>&lt;'code_document_type'&gt;...&lt;/'code_document_type'&gt;: le nom de cette balise permet de d&#233;terminer le type de document qu'il s'agit et contient ses informations</li>
+						<li>&lt;document-id&gt;...&lt;/document-id&gt;: balise contenant l'id</li>
+						<li>&lt;document-title&gt;...&lt;/document-title&gt;: balise contenant le titre</li>
+						<li>&lt;document-summary&gt;...&lt;/document-summary&gt;: balise contenant la description</li>
+						<li>&lt;document-is-commentable&gt;...&lt;/document-is-commentable&gt;: balise permettant de sp&#233;cifier si oui ou non le document peut être comment&#233;</li>
+						<li>&lt;document-date-begin&gt;...&lt;/document-date-begin&gt;: balise contenant la date de d&#233;but du document</li>
+						<li>&lt;document-date-end&gt;...&lt;/document-date-end&gt;: balise contenant la date de fin du document</li>
+						<li>&lt;document-categories&gt;...&lt;/document-categories&gt;: balise contenant la liste des cat&#233;gories</li>
+						<li>&lt;image-file&gt;...&lt;/image-file&gt;: balise contenant les informations du fichier</li>
+						<li>d'autres balises sont pr&#233;sentes selon les attributs du document</li>	
+						<li>&lt;metadata&gt;...&lt;/metadata&gt;: balise contenant les informations du meta-data</li>
+						<li>&lt;Page_Template_Document_Id&gt;...&lt;/Page_Template_Document_Id&gt;: balise contenant l'id de la template </li>
+						<li>&lt;State_Id&gt;...&lt;/State_Id&gt;: balise contenant l'id du statut</li>
+						<li>&lt;Is_Email_Notified_Comment&gt;...&lt;/Is_Email_Notified_Comment&gt;</li>
+						<li>&lt;Is_Moderated_Comment&gt;...&lt;/Is_Moderated_Comment&gt;</li>
+						<li>&lt;Published_status&gt;...&lt;/Published_status&gt;</li>
+						<li>&lt;Comment&gt;...&lt;/Comment&gt;</li>
+					</ul>				
+				</p>
+
+            	<ul>
+            		<li>Pour obtenir la liste des champs n&#233;c&#233;ssaires pour la cr&#233;ation d'un document :</li>
+            	</ul>
+				<div class="source">
+					<pre>
+						http://myhost/mywebapp/rest/document/getcreationdocumentfields/{code_document_type}
+					</pre>
+            	</div>
+            	<p>
+					Description du XML en r&#233;ponse:	
+					<ul>
+						<li>&lt;main-fields&gt;...&lt;/main-fields&gt;: balise les champs en communs entre tous les documents</li>
+						<li>&lt;dublincore-fields&gt;...&lt;/dublincore-fields&gt;: balise les champs en communs entre tous les documents</li>
+						<li>&lt;attributs-fields&gt;...&lt;/attributs-fields&gt;: balise de la liste les champs des attributs</li>
+						<li>&lt;attribut&gt;...&lt;/attribut&gt;: balise d'un champs des attributs, le code sera utilis&#233; comme pour reproduire le formulaire</li>	
+						<li>&lt;parameter-attribut&gt;...&lt;parameter-attribut	&gt;: balise qui concerne les paramètres de l'attribut</li>
+						<li>&lt;parameter-attribut-value&gt;...&lt;parameter-attribut-value&gt;: balise listant les valeurs d'un paramètre d'un attribut</li>
+					</ul>				
+					note: il est important de reprendre les mêmes noms des champs
+				</p>
+            	
+            	<ul>
+            		<li>Pour obtenir la liste des portlets de document pouvant être assign&#233; au document sp&#233;fici&#233; :</li>
+            	</ul>
+				<div class="source">
+					<pre>
+						http://myhost/mywebapp/rest/document/getportletstoassigndocument/{id_document}
+					</pre>
+            	</div>
+            	<p>
+					Description du XML en r&#233;ponse:	
+					<ul>
+						<li>&lt;ref-items&gt;...&lt;/ref-items&gt;: balise contenant la liste des portlets</li>
+						<li>&lt;ref-item name="..." code="..."/&gt;: balise li&#233; &#224; un portlet, name &#233;tant son nom et le code &#233;tant son id</li>
+					</ul>				
+				</p>
+
+            	<ul>
+            		<li>Pour obtenir la liste des portlets de liste de documents pouvant être assign&#233; au document sp&#233;fici&#233; :</li>
+            	</ul>
+				<div class="source">
+					<pre>
+						http://myhost/mywebapp/rest/document/getportletslisttoassigndocument/{id_document}
+					</pre>
+            	</div>
+            	<p>
+					Description du XML en r&#233;ponse:	
+					<ul>
+						<li>&lt;ref-items&gt;...&lt;/ref-items&gt;: balise contenant la liste des portlets</li>
+						<li>&lt;ref-item name="..." code="..."/&gt;: balise li&#233; &#224; un portlet, name &#233;tant son nom et le code &#233;tant son id</li>
+					</ul>				
+				</p>
+            	
+            	<ul>
+            		<li>Pour obtenir la liste des portlets assign&#233;s &#224; un document dans lesquels ils pourront être publi&#233;s :</li>
+            	</ul>
+				<div class="source">
+					<pre>
+						http://myhost/mywebapp/rest/document/getportletsdocumentassigned/{id_document}
+					</pre>
+            	</div>
+            	<p>
+					Description du XML en r&#233;ponse:	
+					<ul>
+						<li>&lt;documents-publication&gt;...&lt;/documents-publication&gt;: balise contenant la liste des portlets</li>
+						<li>&lt;document-publication status="..." portlet-id="..."/&gt;: balise li&#233; &#224; un portlet, status &#233;tant le statut du document sur ce portlet (1=nonpubli&#233;, et 0=publi&#233;) et portlet-id &#233;tant son id</li>
+					</ul>				
+				</p>
+            	
+            	<h3>Action sur un document</h3>
+            	<p>
+            		Pour cr&#233;er, il faut faire un formulaire de type <strong>POST</strong>,
+            		ayant un enctype <strong>multipart/form-data</strong> et avoir les param&#232;tres suivants : 
+            	</p>
+            	<table>
+            		<tr>
+            			<th>Nom du param&#232;tre</th>
+            			<th>Type du param&#232;tre</th>
+            			<th>Description du param&#232;tre</th>
+            		</tr>
+            		<tr>
+            			<td>id_user</td>
+            			<td>text</td>
+            			<td>Correspond &#224; l'ID de l'utilisateur</td>
+            		</tr>
+            		<tr>
+            			<td>id_space</td>
+            			<td>text</td>
+            			<td>Correspond &#224; l'ID de l'espace dans lequel sera cr&#233;&#233; le document</td>
+            		</tr>
+            		<tr>
+            			<td>code_document_type</td>
+            			<td>text</td>
+            			<td>Correspond au code qui permet de d&#233;finir le type du document qui va être cr&#233;&#233;</td>
+            		</tr>
+            	</table>
+            	<div class="source">
+					<pre>
+						http://myhost/mywebapp/rest/document/docreatedocument/
+					</pre>
+            	</div>
+            	<p>
+            		Pour modifier, il faut faire un formulaire de type <strong>POST</strong>,
+            		ayant un enctype <strong>multipart/form-data</strong> et avoir les param&#232;tres suivants : 
+            	</p>
+            	<table>
+            		<tr>
+            			<th>Nom du param&#232;tre</th>
+            			<th>Type du param&#232;tre</th>
+            			<th>Description du param&#232;tre</th>
+            		</tr>
+            		<tr>
+            			<td>id_user</td>
+            			<td>text</td>
+            			<td>Correspond &#224; l'ID de l'utilisateur</td>
+            		</tr>
+            		<tr>
+            			<td>id_document</td>
+            			<td>text</td>
+            			<td>Correspond &#224; l'ID du document &#224; modifier</td>
+            		</tr>
+            		<tr>
+            			<td>id_state</td>
+            			<td>text</td>
+            			<td>Correspond &#224; l'ID du nouveau statut du document</td>
+            		</tr>
+            	</table>
+            	
+           		<div class="source">
+					<pre>
+						http://myhost/mywebapps/rest/document/domodifydocument/
+					</pre>
+				</div>
+				
+				<p>
+            		Pour supprimer un document, il faut avoir dans le header de la requ&#234;te HTTP la m&#233;thode <strong>DELETE</strong>
+            		et avoir le param&#232;tre suivant : 
+            	</p>
+            	<table>
+            		<tr>
+            			<th>Nom du param&#232;tre</th>
+            			<th>Type du param&#232;tre</th>
+            			<th>Description du param&#232;tre</th>
+            		</tr>
+            		<tr>
+            			<td>id_document</td>
+            			<td>text</td>
+            			<td>Correspond &#224; l'ID du document</td>
+            		</tr>
+            	</table>
+            	<div class="source">
+					<pre>
+						http://myhost/mywebapps/rest/doremovedocument/{id_document}
+					</pre>
+				</div>
+				
+				<p>
+            		Pour soumettre ou non un document &#224; la validation, il faut faire un formulaire de type <strong>POST</strong>,
+            		et avoir les param&#232;tres suivants : 
+            	</p>
+            	<table>
+            		<tr>
+            			<th>Nom du param&#232;tre</th>
+            			<th>Type du param&#232;tre</th>
+            			<th>Description du param&#232;tre</th>
+            		</tr>
+            		<tr>
+            			<td>id_user</td>
+            			<td>text</td>
+            			<td>Correspond &#224; l'ID de l'utilisateur</td>
+            		</tr>
+            		<tr>
+            			<td>id_document</td>
+            			<td>text</td>
+            			<td>Correspond &#224; l'ID du document &#224; modifier</td>
+            		</tr>
+            		<tr>
+            			<td>id_action</td>
+            			<td>text</td>
+            			<td>Correspond &#224; l'ID de l'action effectu&#233;e sur le document: 7 pour le soumettre ou 6 dans le cas contraire</td>
+            		</tr>
+            	</table>
+            	
+           		<div class="source">
+					<pre>
+						http://myhost/mywebapps/rest/document/dosubmitdocumenttovalidate/
+					</pre>
+				</div>
+				
+				<p>
+            		Pour valider un document, il faut faire un formulaire de type <strong>POST</strong>,
+            		et avoir les param&#232;tres suivants : 
+            	</p>
+            	<table>
+            		<tr>
+            			<th>Nom du param&#232;tre</th>
+            			<th>Type du param&#232;tre</th>
+            			<th>Description du param&#232;tre</th>
+            		</tr>
+            		<tr>
+            			<td>id_user</td>
+            			<td>text</td>
+            			<td>Correspond &#224; l'ID de l'utilisateur</td>
+            		</tr>
+            		<tr>
+            			<td>id_document</td>
+            			<td>text</td>
+            			<td>Correspond &#224; l'ID du document &#224; modifier</td>
+            		</tr>
+            		<tr>
+            			<td>id_action</td>
+            			<td>text</td>
+            			<td>Correspond &#224; l'ID de l'action effectu&#233;e sur le document: ici l'action est 4</td>
+            		</tr>
+            	</table>
+            	
+           		<div class="source">
+					<pre>
+						http://myhost/mywebapps/rest/document/dovalidatedocument/
+					</pre>
+				</div>
+				
+				<p>
+            		Pour assigner un document &#224; un portlet, il faut faire un formulaire de type <strong>POST</strong>,
+            		et avoir les param&#232;tres suivants : 
+            	</p>
+            	<table>
+            		<tr>
+            			<th>Nom du param&#232;tre</th>
+            			<th>Type du param&#232;tre</th>
+            			<th>Description du param&#232;tre</th>
+            		</tr>
+            		<tr>
+            			<td>id_document</td>
+            			<td>text</td>
+            			<td>Correspond &#224; l'ID du document &#224; modifier</td>
+            		</tr>
+            		<tr>
+            			<td>id_portlet</td>
+            			<td>text</td>
+            			<td>Correspond &#224; l'ID du portlet</td>
+            		</tr>
+            	</table>
+            	
+           		<div class="source">
+					<pre>
+						http://myhost/mywebapps/rest/document/doassigndocumentportlet/
+					</pre>
+				</div>
+				
+				<p>
+            		Pour dissocier un document &#224; un portlet, il faut faire un formulaire de type <strong>POST</strong>,
+            		et avoir les param&#232;tres suivants : 
+            	</p>
+            	<table>
+            		<tr>
+            			<th>Nom du param&#232;tre</th>
+            			<th>Type du param&#232;tre</th>
+            			<th>Description du param&#232;tre</th>
+            		</tr>
+            		<tr>
+            			<td>id_document</td>
+            			<td>text</td>
+            			<td>Correspond &#224; l'ID du document &#224; modifier</td>
+            		</tr>
+            		<tr>
+            			<td>id_portlet</td>
+            			<td>text</td>
+            			<td>Correspond &#224; l'ID du portlet</td>
+            		</tr>
+            	</table>
+            	
+           		<div class="source">
+					<pre>
+						http://myhost/mywebapps/rest/document/dounassigndocumentportlet/
+					</pre>
+				</div>
+				
+				<p>
+            		Pour publier un document sur un portlet, il faut faire un formulaire de type <strong>POST</strong>,
+            		et avoir les param&#232;tres suivants : 
+            	</p>
+            	<table>
+            		<tr>
+            			<th>Nom du param&#232;tre</th>
+            			<th>Type du param&#232;tre</th>
+            			<th>Description du param&#232;tre</th>
+            		</tr>
+            		<tr>
+            			<td>id_document</td>
+            			<td>text</td>
+            			<td>Correspond &#224; l'ID du document &#224; modifier</td>
+            		</tr>
+            		<tr>
+            			<td>id_portlet</td>
+            			<td>text</td>
+            			<td>Correspond &#224; l'ID de la portlet</td>
+            		</tr>
+            	</table>
+            	
+           		<div class="source">
+					<pre>
+						http://myhost/mywebapps/rest/document/dopublishdocument/
+					</pre>
+				</div>
+				
+				<p>
+            		Pour d&#233;publier un document d'un portlet, il faut faire un formulaire de type <strong>POST</strong>,
+            		et avoir les param&#232;tres suivants : 
+            	</p>
+            	<table>
+            		<tr>
+            			<th>Nom du param&#232;tre</th>
+            			<th>Type du param&#232;tre</th>
+            			<th>Description du param&#232;tre</th>
+            		</tr>
+            		<tr>
+            			<td>id_document</td>
+            			<td>text</td>
+            			<td>Correspond &#224; l'ID du document &#224; modifier</td>
+            		</tr>
+            		<tr>
+            			<td>id_portlet</td>
+            			<td>text</td>
+            			<td>Correspond &#224; l'ID du portlet</td>
+            		</tr>
+            	</table>
+            	
+           		<div class="source">
+					<pre>
+						http://myhost/mywebapps/rest/document/dounpublishdocument/
+					</pre>
+				</div>
+				
+            </subsection>
+        </section>
+    </body>
+</document>

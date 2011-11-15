@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+    <properties>
+        <title>Configuration</title>
+    </properties>
+    <body>
+        <section name="Installation">
+			<p>
+				Configurer la cl&#233; priv&#233;e utilis&#233;e pour les signatures dans le fichier <strong>document-rest.xml</strong> : 
+			</p>
+			<div class="source">
+				<pre>
+				&lt;filters&gt;
+					&lt;filter&gt;
+						&lt;filter-name&gt;documentRestSecurity&lt;/filter-name&gt;
+						&lt;url-pattern&gt;/rest/document/*&lt;/url-pattern&gt;
+						&lt;filter-class&gt;fr.paris.lutece.util.signrequest.servlet.HeaderHashRequestFilter&lt;/filter-class&gt;
+				
+						&lt;init-param&gt;
+							&lt;param-name&gt;elementsSignature&lt;/param-name&gt;
+							&lt;param-value&gt;&lt;/param-value&gt;
+						&lt;/init-param&gt;
+				
+						&lt;init-param&gt;
+							&lt;param-name&gt;validityTimePeriod&lt;/param-name&gt;
+							&lt;param-value&gt;0&lt;/param-value&gt;
+						&lt;/init-param&gt;
+				
+						&lt;init-param&gt;
+							&lt;param-name&gt;privateKey&lt;/param-name&gt;
+							&lt;param-value&gt;<strong>changeMe</strong>&lt;/param-value&gt;
+						&lt;/init-param&gt;
+					&lt;/filter&gt;
+				&lt;/filters&gt;
+				</pre>
+			</div>
+			<p>
+				Configurer la taille maximale pour un fichier dans <strong>document-rest.properties</strong> : 
+			</p>
+			<div class="source">
+				<pre>
+					document-rest.multipart.requestSizeMax=<strong>10485760</strong>
+				</pre>
+			</div>
+        </section>
+    </body>
+</document>
