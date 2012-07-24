@@ -262,6 +262,21 @@ public class DocumentRest
         return ResponseActionBuilderXml.getFailureResponseActionXML(  );
     }
 
+     /**
+     * Get list of different types document
+     * @param strCodeDocumentType type document code
+     * @return
+     */
+    @GET
+    @Path( DocumentRestConstants.PATH_GET_LIST_DOCUMENT_TYPE )
+    @Produces( MediaType.APPLICATION_XML )
+    public List<DocumentType> getListDocumentTypes( )
+    {
+        ArrayList<DocumentType> documentTypesList = (ArrayList<DocumentType>) DocumentTypeHome.findAll();
+
+        return documentTypesList;
+    }
+
     /**
      * Remove the document by id
      * @param strIdDocument id document
@@ -650,12 +665,10 @@ public class DocumentRest
         }
         catch ( SizeLimitExceededException e )
         {
-            e.printStackTrace(  );
             return ResponseActionBuilderXml.getFailureResponseActionXML(  );
         }
         catch ( FileUploadException e )
         {
-            e.printStackTrace(  );
             return ResponseActionBuilderXml.getFailureResponseActionXML(  );
         }
 
@@ -980,12 +993,10 @@ public class DocumentRest
         }
         catch ( SizeLimitExceededException e )
         {
-            e.printStackTrace(  );
             return ResponseActionBuilderXml.getFailureResponseActionXML(  );
         }
         catch ( FileUploadException e )
         {
-            e.printStackTrace(  );
             return ResponseActionBuilderXml.getFailureResponseActionXML(  );
         }
 
