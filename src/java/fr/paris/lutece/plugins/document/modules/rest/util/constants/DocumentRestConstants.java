@@ -51,6 +51,7 @@ public class DocumentRestConstants
     public static final String PATH_WADL = "wadl";
     public static final String PATH_GET_USER_SPACES = "getuserspaces/{id_user}";
     public static final String PATH_GET_SPACE = "getspace/{id_space}";
+    public static final String PATH_GET_SPACES_ALLOWING_DOCUMENT_CREATION_BY_CODE_DOCUMENT_TYPE = "getspacesbydocumenttype/{code_document_type}";
     public static final String PATH_GET_DOCUMENTS_LIST_BY_SPACE = "getdocumentslistbyspace/{id_space}";
     public static final String PATH_GET_DOCUMENT = "getdocument/{id_document}";
     public static final String PATH_MANAGE = "manage/";

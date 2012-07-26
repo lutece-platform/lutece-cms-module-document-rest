@@ -62,6 +62,7 @@ import fr.paris.lutece.plugins.document.business.Document;
 import fr.paris.lutece.plugins.document.business.DocumentHome;
 import fr.paris.lutece.plugins.document.business.DocumentType;
 import fr.paris.lutece.plugins.document.business.DocumentTypeHome;
+import fr.paris.lutece.plugins.document.service.DocumentTypeService;
 import fr.paris.lutece.plugins.document.business.IndexerAction;
 import fr.paris.lutece.plugins.document.business.attributes.DocumentAttribute;
 import fr.paris.lutece.plugins.document.business.category.Category;
@@ -141,7 +142,7 @@ public class DocumentRest
 
         return t.getHtml(  );
     }
-
+    
     /**
      * Get document spaces by id user
      * @param strIdUser the id user
@@ -272,7 +273,7 @@ public class DocumentRest
     @Produces( MediaType.APPLICATION_XML )
     public List<DocumentType> getListDocumentTypes( )
     {
-        ArrayList<DocumentType> documentTypesList = (ArrayList<DocumentType>) DocumentTypeHome.findAll();
+        List<DocumentType> documentTypesList = DocumentTypeService.getInstance( ).getXmlDocumentTypesList( );
 
         return documentTypesList;
     }
