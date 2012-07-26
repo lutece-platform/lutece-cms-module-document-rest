@@ -33,27 +33,29 @@
  */
 package fr.paris.lutece.plugins.document.modules.rest.service.formatters;
 
-import java.util.List;
-
-import org.apache.commons.lang.StringUtils;
-
 import fr.paris.lutece.plugins.document.business.spaces.DocumentSpace;
 import fr.paris.lutece.plugins.document.modules.rest.util.constants.DocumentRestConstants;
 import fr.paris.lutece.plugins.rest.service.formatters.IFormatter;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.util.xml.XmlUtil;
 
+import org.apache.commons.lang.StringUtils;
+
+import java.util.List;
+
+
 /**
  * SpaceFormatterXml
  */
 public class SpaceFormatterXml implements IFormatter<DocumentSpace>
 {
-	/**
-     * {@inheritDoc}
-     */
+    /**
+    * {@inheritDoc}
+    */
     public String format( DocumentSpace resource )
     {
-        StringBuffer sbXml = new StringBuffer( AppPropertiesService.getProperty( DocumentRestConstants.PROPERTIES_XML_HEADER ) );
+        StringBuffer sbXml = new StringBuffer( AppPropertiesService.getProperty( 
+                    DocumentRestConstants.PROPERTIES_XML_HEADER ) );
         XmlUtil.beginElement( sbXml, DocumentRestConstants.TAG_RESPONSE );
         XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_STATUS, DocumentRestConstants.STATUS_SUCCESS );
 
@@ -63,15 +65,16 @@ public class SpaceFormatterXml implements IFormatter<DocumentSpace>
 
         return sbXml.toString(  );
     }
-    
+
     /**
-	 * Format DocumentSpace
-	 * @param listResources resources list
-	 * @param referenceItem referenceItem
-	 */
+         * Format DocumentSpace
+         * @param listResources resources list
+         * @param referenceItem referenceItem
+         */
     public String format( List<DocumentSpace> listResources )
     {
-        StringBuffer sbXml = new StringBuffer( AppPropertiesService.getProperty( DocumentRestConstants.PROPERTIES_XML_HEADER ) );
+        StringBuffer sbXml = new StringBuffer( AppPropertiesService.getProperty( 
+                    DocumentRestConstants.PROPERTIES_XML_HEADER ) );
         XmlUtil.beginElement( sbXml, DocumentRestConstants.TAG_RESPONSE );
         XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_STATUS, DocumentRestConstants.STATUS_SUCCESS );
         XmlUtil.beginElement( sbXml, DocumentRestConstants.TAG_SPACES );

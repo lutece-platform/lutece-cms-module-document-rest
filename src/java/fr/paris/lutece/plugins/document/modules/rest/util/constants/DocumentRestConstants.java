@@ -34,15 +34,14 @@
 package fr.paris.lutece.plugins.document.modules.rest.util.constants;
 
 
-
 /**
  *
  * DocumentRestConstants
  *
  */
 public class DocumentRestConstants
-{	
-	// CONSTANTS
+{
+    // CONSTANTS
     public static final String SLASH = "/";
     public static final String STATUS_SUCCESS = "SUCCESS";
     public static final String STATUS_FAILURE = "FAILURE";
@@ -97,6 +96,14 @@ public class DocumentRestConstants
     public static final String TAG_SPACE_DOCUMENT_TYPE = "document-type";
     public static final String TAG_SPACE_DOCUMENT_CREATION_ALLOWED = "space-document-creation-allowed";
     public static final String TAG_SPACE_WORKGROUP = "space-workgroup";
+    public static final String TAG_DOCUMENT_TYPES = "document_types";
+    public static final String TAG_DOCUMENT_TYPE = "document_type";
+    public static final String TAG_CODE_DOCUMENT_TYPE = "code_document_type";
+    public static final String TAG_DOCUMENT_TYPE_NAME = "document_type_name";
+    public static final String TAG_DOCUMENT_TYPE_DESCRIPTION = "description";
+    public static final String TAG_DOCUMENT_TYPE_THUMBNAIL_ATTRIBUTE_ID = "thumbnail_attr_id";
+    public static final String TAG_DOCUMENT_TYPE_DEFAULT_THUMBNAIL_URL = "default_thumbnail_url";
+    public static final String TAG_DOCUMENT_TYPE_METADATA_HANDLER = "metadata_handler";
     public static final String TAG_CREATE_DOCUMENT_FIELDS_FORM = "form";
     public static final String TAG_CREATE_DOCUMENT_FIELDS_FORM_MAINFIELDS = "main-fields";
     public static final String TAG_CREATE_DOCUMENT_FIELDS_FORM_DUBLINCORE_FIELDS = "dublincore-fields";
@@ -113,7 +120,7 @@ public class DocumentRestConstants
     public static final String TAG_REF_ITEM = "ref-item";
     public static final String TAG_DOCUMENTS_PUBLICATION = "documents-publication";
     public static final String TAG_DOCUMENT_PUBLICATION = "document-publication";
-    
+
     //MAP ATTRIBUTS    
     public static final String ATTRIBUTS_PORTLET_ID = "portlet-id";
     public static final String ATTRIBUTS_STATUS = "status";
