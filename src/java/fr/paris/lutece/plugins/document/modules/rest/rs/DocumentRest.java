@@ -271,11 +271,12 @@ public class DocumentRest
     @GET
     @Path( DocumentRestConstants.PATH_GET_LIST_DOCUMENT_TYPE )
     @Produces( MediaType.APPLICATION_XML )
-    public List<DocumentType> getListDocumentTypes( )
+    public String getListDocumentTypes(  )
     {
-        List<DocumentType> documentTypesList = DocumentTypeService.getInstance( ).getXmlDocumentTypesList( );
+        String documentTypesList = DocumentTypeService.getInstance(  ).getXmlDocumentTypesList(  );
 
-        return documentTypesList;
+
+        return AddHeaderXml.addHeaderXml(documentTypesList);
     }
 
     /**
