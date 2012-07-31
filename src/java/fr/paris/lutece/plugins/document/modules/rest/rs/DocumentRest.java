@@ -269,14 +269,28 @@ public class DocumentRest
      * @return
      */
     @GET
-    @Path( DocumentRestConstants.PATH_GET_LIST_DOCUMENT_TYPE )
+    @Path( DocumentRestConstants.PATH_GET_USER_LIST_DOCUMENT_TYPE )
     @Produces( MediaType.APPLICATION_XML )
-    public String getListDocumentTypes(  )
+    public String getListDocumentTypes( @PathParam( DocumentRestConstants.PARAMETER_ID_USER )
+    String strIdUser  )
     {
-        String documentTypesList = DocumentTypeService.getInstance(  ).getXmlDocumentTypesList(  );
+        if ( StringUtils.isNotBlank( strIdUser ) && StringUtils.isNumeric( strIdUser ) )
+        {
+            //get AdminUser
+            int nIdUser = Integer.parseInt( strIdUser );
+            AdminUser user = AdminUserHome.findByPrimaryKey( nIdUser );
 
+            if ( user != null )
+            {
+                user.setRights( AdminUserHome.getRightsListForUser( nIdUser ) );
+                user.setRoles( AdminUserHome.getRolesListForUser( nIdUser ) );
 
-        return AddHeaderXml.addHeaderXml(documentTypesList);
+                // Spaces
+                String strXmlTypesList = DocumentTypeService.getInstance(  ).getXmlDocumentTypesList( user );
+                return AddHeaderXml.addHeaderXml( strXmlTypesList );
+            }
+        }
+        return ResponseActionBuilderXml.getFailureResponseActionXML(  );
     }
 
     /**

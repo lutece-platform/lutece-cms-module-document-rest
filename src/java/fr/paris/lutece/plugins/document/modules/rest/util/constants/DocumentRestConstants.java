@@ -55,7 +55,7 @@ public class DocumentRestConstants
     public static final String PATH_GET_DOCUMENT = "getdocument/{id_document}";
     public static final String PATH_MANAGE = "manage/";
     public static final String PATH_CREATE_GET_FIELDS = "getcreationdocumentfields/{code_document_type}";
-    public static final String PATH_GET_LIST_DOCUMENT_TYPE = "getdocumenttypelist/";
+    public static final String PATH_GET_USER_LIST_DOCUMENT_TYPE = "getdocumenttypelist/{id_user}";
     public static final String PATH_CREATE_DOCUMENT = "docreatedocument/";
     public static final String PATH_MODIFY_DOCUMENT = "domodifydocument/";
     public static final String PATH_REMOVE_DOCUMENT = "doremovedocument/{id_document}";
