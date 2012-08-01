@@ -283,10 +283,9 @@ public class DocumentRest
             if ( user != null )
             {
                 user.setRights( AdminUserHome.getRightsListForUser( nIdUser ) );
-                user.setRoles( AdminUserHome.getRolesListForUser( nIdUser ) );
 
                 // Spaces
-                String strXmlTypesList = DocumentTypeService.getInstance(  ).getXmlDocumentTypesList( user );
+                String strXmlTypesList = DocumentTypeService.getInstance(  ).getXmlDocumentTypesList(  );
                 return AddHeaderXml.addHeaderXml( strXmlTypesList );
             }
         }
