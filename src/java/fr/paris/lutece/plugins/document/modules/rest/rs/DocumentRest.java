@@ -173,6 +173,31 @@ public class DocumentRest
         return ResponseActionBuilderXml.getFailureResponseActionXML(  );
     }
 
+    @GET
+    @Path( DocumentRestConstants.PATH_GET_SPACES_ALLOWING_DOCUMENT_CREATION_BY_CODE_DOCUMENT_TYPE )
+    @Produces( MediaType.APPLICATION_XML )
+    public String getDocumentSpacesByCodeType( @PathParam( DocumentRestConstants.PARAMETER_CODE_DOCUMENT_TYPE )
+    String strCodeType )
+    {
+        if ( StringUtils.isNotBlank( strCodeType ) )
+        {
+            //get AdminUser
+            int nIdUser = 1;
+            AdminUser user = AdminUserHome.findByPrimaryKey( nIdUser );
+
+            if ( user != null )
+            {
+                user.setRights( AdminUserHome.getRightsListForUser( nIdUser ) );
+                user.setRoles( AdminUserHome.getRolesListForUser( nIdUser ) );
+
+                // Spaces
+                String strXmlSpaces = DocumentSpacesService.getInstance(  ).getXmlSpacesList( user, strCodeType );
+                return AddHeaderXml.addHeaderXml( strXmlSpaces );
+            }
+        }
+        return ResponseActionBuilderXml.getFailureResponseActionXML(  );
+    }
+
     /**
      * Get space by id
      * @param strIdSpace the id space
