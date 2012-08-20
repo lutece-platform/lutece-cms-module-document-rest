@@ -291,30 +291,18 @@ public class DocumentRest
      /**
      * Get list of different types document
      * @param strCodeDocumentType type document code
-     * @return
+     * @return the list of Document Type on XML file
      */
     @GET
-    @Path( DocumentRestConstants.PATH_GET_USER_LIST_DOCUMENT_TYPE )
+    @Path( DocumentRestConstants.PATH_GET_LIST_DOCUMENT_TYPE )
     @Produces( MediaType.APPLICATION_XML )
-    public String getListDocumentTypes( @PathParam( DocumentRestConstants.PARAMETER_ID_USER )
-    String strIdUser  )
+    public String getListDocumentTypes(   )
     {
-        if ( StringUtils.isNotBlank( strIdUser ) && StringUtils.isNumeric( strIdUser ) )
-        {
-            //get AdminUser
-            int nIdUser = Integer.parseInt( strIdUser );
-            AdminUser user = AdminUserHome.findByPrimaryKey( nIdUser );
 
-            if ( user != null )
-            {
-                user.setRights( AdminUserHome.getRightsListForUser( nIdUser ) );
+        // Types
+        String strXmlTypesList = DocumentTypeService.getInstance(  ).getXmlDocumentTypesList(  );
+        return AddHeaderXml.addHeaderXml( strXmlTypesList );
 
-                // Spaces
-                String strXmlTypesList = DocumentTypeService.getInstance(  ).getXmlDocumentTypesList(  );
-                return AddHeaderXml.addHeaderXml( strXmlTypesList );
-            }
-        }
-        return ResponseActionBuilderXml.getFailureResponseActionXML(  );
     }
 
     /**
