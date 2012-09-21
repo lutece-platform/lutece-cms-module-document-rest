@@ -33,38 +33,13 @@
  */
 package fr.paris.lutece.plugins.document.modules.rest.rs;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.FileUploadBase.SizeLimitExceededException;
-import org.apache.commons.lang.StringUtils;
-
 import fr.paris.lutece.plugins.document.business.Document;
 import fr.paris.lutece.plugins.document.business.DocumentHome;
 import fr.paris.lutece.plugins.document.business.DocumentType;
 import fr.paris.lutece.plugins.document.business.DocumentTypeHome;
-import fr.paris.lutece.plugins.document.service.DocumentTypeService;
 import fr.paris.lutece.plugins.document.business.IndexerAction;
 import fr.paris.lutece.plugins.document.business.attributes.DocumentAttribute;
+import fr.paris.lutece.plugins.document.business.attributes.DocumentAttributeHome;
 import fr.paris.lutece.plugins.document.business.category.Category;
 import fr.paris.lutece.plugins.document.business.category.CategoryHome;
 import fr.paris.lutece.plugins.document.business.portlet.DocumentListPortletHome;
@@ -77,9 +52,9 @@ import fr.paris.lutece.plugins.document.business.spaces.DocumentSpace;
 import fr.paris.lutece.plugins.document.business.spaces.DocumentSpaceHome;
 import fr.paris.lutece.plugins.document.business.workflow.DocumentAction;
 import fr.paris.lutece.plugins.document.business.workflow.DocumentActionHome;
+import fr.paris.lutece.plugins.document.modules.rest.util.builderxml.AddHeaderXml;
 import fr.paris.lutece.plugins.document.modules.rest.util.builderxml.FieldsToCreateDocumentBuilderXml;
 import fr.paris.lutece.plugins.document.modules.rest.util.builderxml.ResponseActionBuilderXml;
-import fr.paris.lutece.plugins.document.modules.rest.util.builderxml.AddHeaderXml;
 import fr.paris.lutece.plugins.document.modules.rest.util.constants.DocumentRestConstants;
 import fr.paris.lutece.plugins.document.service.AttributeManager;
 import fr.paris.lutece.plugins.document.service.AttributeService;
@@ -87,6 +62,8 @@ import fr.paris.lutece.plugins.document.service.DocumentException;
 import fr.paris.lutece.plugins.document.service.DocumentPlugin;
 import fr.paris.lutece.plugins.document.service.DocumentService;
 import fr.paris.lutece.plugins.document.service.DocumentTypeResourceIdService;
+import fr.paris.lutece.plugins.document.service.DocumentTypeService;
+import fr.paris.lutece.plugins.document.service.attributes.DocumentAttributesService;
 import fr.paris.lutece.plugins.document.service.metadata.MetadataHandler;
 import fr.paris.lutece.plugins.document.service.publishing.PublishingService;
 import fr.paris.lutece.plugins.document.service.search.DocumentIndexer;
@@ -106,6 +83,33 @@ import fr.paris.lutece.util.date.DateUtil;
 import fr.paris.lutece.util.html.HtmlTemplate;
 import fr.paris.lutece.util.http.MultipartUtil;
 import fr.paris.lutece.util.string.StringUtil;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadBase.SizeLimitExceededException;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.lang.StringUtils;
+
+import java.sql.Timestamp;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 
 
 /**
@@ -142,7 +146,7 @@ public class DocumentRest
 
         return t.getHtml(  );
     }
-    
+
     /**
      * Get document spaces by id user
      * @param strIdUser the id user
@@ -167,16 +171,24 @@ public class DocumentRest
 
                 // Spaces
                 String strXmlSpaces = DocumentSpacesService.getInstance(  ).getXmlSpacesList( user );
+
                 return AddHeaderXml.addHeaderXml( strXmlSpaces );
             }
         }
+
         return ResponseActionBuilderXml.getFailureResponseActionXML(  );
     }
 
+    /**
+     * Get list of all spaces selected by a specific code document type
+     * @param strCodeType The specific code document type
+     * @return the xml of spaces by code document type
+     */
     @GET
     @Path( DocumentRestConstants.PATH_GET_SPACES_ALLOWING_DOCUMENT_CREATION_BY_CODE_DOCUMENT_TYPE )
     @Produces( MediaType.APPLICATION_XML )
-    public String getDocumentSpacesByCodeType( @PathParam( DocumentRestConstants.PARAMETER_CODE_DOCUMENT_TYPE )
+    public String getDocumentSpacesByCodeType( 
+        @PathParam( DocumentRestConstants.PARAMETER_CODE_DOCUMENT_TYPE )
     String strCodeType )
     {
         if ( StringUtils.isNotBlank( strCodeType ) )
@@ -192,9 +204,34 @@ public class DocumentRest
 
                 // Spaces
                 String strXmlSpaces = DocumentSpacesService.getInstance(  ).getXmlSpacesList( user, strCodeType );
+
                 return AddHeaderXml.addHeaderXml( strXmlSpaces );
             }
         }
+
+        return ResponseActionBuilderXml.getFailureResponseActionXML(  );
+    }
+
+    /**
+     * Get all atributes of a selected document type
+     * @param strCodeType The code document type
+     * @return A xml list of all attributes of the document type
+     */
+    @GET
+    @Path( DocumentRestConstants.PATH_GET_ATTRIBUTE_BY_DOCUMENT_TYPE )
+    @Produces( MediaType.APPLICATION_XML )
+    public String getDocumentAttributesByCodeType( 
+        @PathParam( DocumentRestConstants.PARAMETER_CODE_DOCUMENT_TYPE )
+    String strCodeType )
+    {
+        if ( StringUtils.isNotBlank( strCodeType ) )
+        {
+            //Attributes
+            String strXmlAttributes = DocumentAttributesService.getInstance(  ).getXmlAttributesList( strCodeType );
+
+            return AddHeaderXml.addHeaderXml( strXmlAttributes );
+        }
+
         return ResponseActionBuilderXml.getFailureResponseActionXML(  );
     }
 
@@ -288,21 +325,19 @@ public class DocumentRest
         return ResponseActionBuilderXml.getFailureResponseActionXML(  );
     }
 
-     /**
-     * Get list of different types document
-     * @param strCodeDocumentType type document code
-     * @return the list of Document Type on XML file
-     */
+    /**
+    * Get list of different types document
+    * @return the list of Document Type on XML file
+    */
     @GET
     @Path( DocumentRestConstants.PATH_GET_LIST_DOCUMENT_TYPE )
     @Produces( MediaType.APPLICATION_XML )
-    public String getListDocumentTypes(   )
+    public String getListDocumentTypes(  )
     {
-
         // Types
         String strXmlTypesList = DocumentTypeService.getInstance(  ).getXmlDocumentTypesList(  );
-        return AddHeaderXml.addHeaderXml( strXmlTypesList );
 
+        return AddHeaderXml.addHeaderXml( strXmlTypesList );
     }
 
     /**
@@ -535,7 +570,7 @@ public class DocumentRest
     }
 
     /**
-     * Assign a document to the portlet 
+     * Assign a document to the portlet
      * @param strIdDocument id document
      * @param strIdPortlet id portlet
      * @param request request
@@ -565,7 +600,7 @@ public class DocumentRest
     }
 
     /**
-     * Unassign a document to the portlet 
+     * Unassign a document to the portlet
      * @param strIdDocument id document
      * @param strIdPortlet id portlet
      * @param request request
@@ -752,7 +787,8 @@ public class DocumentRest
                 }
 
                 // process
-                ResourceEnhancer.doCreateResourceAddOn( multipartRequest, DocumentRestConstants.PROPERTY_RESOURCE_TYPE, document.getId(  ) );
+                ResourceEnhancer.doCreateResourceAddOn( multipartRequest, DocumentRestConstants.PROPERTY_RESOURCE_TYPE,
+                    document.getId(  ) );
             }
         }
         else
@@ -776,7 +812,7 @@ public class DocumentRest
         String strDocumentComment = multipartRequest.getParameter( DocumentRestConstants.PARAMETER_DOCUMENT_COMMENT );
         String strDateValidityBegin = multipartRequest.getParameter( DocumentRestConstants.PARAMETER_VALIDITY_BEGIN );
         String strDateValidityEnd = multipartRequest.getParameter( DocumentRestConstants.PARAMETER_VALIDITY_END );
-        String strAcceptSiteComments = ( multipartRequest.getParameter(DocumentRestConstants. PARAMETER_ACCEPT_SITE_COMMENTS ) != null )
+        String strAcceptSiteComments = ( multipartRequest.getParameter( DocumentRestConstants.PARAMETER_ACCEPT_SITE_COMMENTS ) != null )
             ? multipartRequest.getParameter( DocumentRestConstants.PARAMETER_ACCEPT_SITE_COMMENTS ) : "0";
         String strIsModeratedComment = ( multipartRequest.getParameter( DocumentRestConstants.PARAMETER_IS_MODERATED_COMMENT ) != null )
             ? multipartRequest.getParameter( DocumentRestConstants.PARAMETER_IS_MODERATED_COMMENT ) : "0";
@@ -910,7 +946,8 @@ public class DocumentRest
     {
         String strParameterStringValue = multipartRequest.getParameter( attribute.getCode(  ) );
         FileItem fileParameterBinaryValue = multipartRequest.getFile( attribute.getCode(  ) );
-        String strIsUpdatable = multipartRequest.getParameter( DocumentRestConstants.PARAMETER_ATTRIBUTE_UPDATE + attribute.getCode(  ) );
+        String strIsUpdatable = multipartRequest.getParameter( DocumentRestConstants.PARAMETER_ATTRIBUTE_UPDATE +
+                attribute.getCode(  ) );
         boolean bIsUpdatable = ( ( strIsUpdatable == null ) || strIsUpdatable.equals( "" ) ) ? false : true;
 
         if ( attribute.isRequired(  ) &&

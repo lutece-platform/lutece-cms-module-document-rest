@@ -51,6 +51,7 @@ public class DocumentRestConstants
     public static final String PATH_GET_USER_SPACES = "getuserspaces/{id_user}";
     public static final String PATH_GET_SPACE = "getspace/{id_space}";
     public static final String PATH_GET_SPACES_ALLOWING_DOCUMENT_CREATION_BY_CODE_DOCUMENT_TYPE = "getspacesbydocumenttype/{code_document_type}";
+    public static final String PATH_GET_ATTRIBUTE_BY_DOCUMENT_TYPE = "getdocumenttypeattribute/{code_document_type}";
     public static final String PATH_GET_DOCUMENTS_LIST_BY_SPACE = "getdocumentslistbyspace/{id_space}";
     public static final String PATH_GET_DOCUMENT = "getdocument/{id_document}";
     public static final String PATH_MANAGE = "manage/";
@@ -104,6 +105,13 @@ public class DocumentRestConstants
     public static final String TAG_DOCUMENT_TYPE_THUMBNAIL_ATTRIBUTE_ID = "thumbnail_attr_id";
     public static final String TAG_DOCUMENT_TYPE_DEFAULT_THUMBNAIL_URL = "default_thumbnail_url";
     public static final String TAG_DOCUMENT_TYPE_METADATA_HANDLER = "metadata_handler";
+    public static final String TAG_ATTRIBUTE = "attribute";
+    public static final String TAG_ATTRIBUTES = "attributes";
+    public static final String TAG_ATTRIBUTE_ID = "id_document_attr";
+    public static final String TAG_CODE_ATTRIBUTE_TYPE = "code_attr_type";
+    public static final String TAG_CODE_ATTRIBUTE = "code";
+    public static final String TAG_DOCUMENT_TYPE_ATTRIBUTE_NAME = "document_type_attr_name";
+    public static final String TAG_ATTRIBUTE_DESCRIPTION = "description";
     public static final String TAG_CREATE_DOCUMENT_FIELDS_FORM = "form";
     public static final String TAG_CREATE_DOCUMENT_FIELDS_FORM_MAINFIELDS = "main-fields";
     public static final String TAG_CREATE_DOCUMENT_FIELDS_FORM_DUBLINCORE_FIELDS = "dublincore-fields";
