@@ -33,16 +33,16 @@
  */
 package fr.paris.lutece.plugins.document.modules.rest.service.formatters;
 
-import java.util.List;
-
-import org.apache.commons.lang.StringUtils;
-
 import fr.paris.lutece.plugins.document.business.Document;
 import fr.paris.lutece.plugins.document.business.DocumentHome;
 import fr.paris.lutece.plugins.document.modules.rest.util.constants.DocumentRestConstants;
 import fr.paris.lutece.plugins.rest.service.formatters.IFormatter;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.util.xml.XmlUtil;
+
+import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
 
 /** 
  * DocumentFormatterXml
@@ -102,11 +102,7 @@ public class DocumentFormatterXml implements IFormatter<Document>
             XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_MAILING_LIST_ID, document.getMailingListId(  ) );
             XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_PAGE_TEMPLATE_DOCUMENT_ID,
                 document.getPageTemplateDocumentId(  ) );
-            XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_STATE_ID, document.getStateId(  ) );
-            XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_IS_NOTIFIED_COMMENT,
-                document.getIsEmailNotifiedComment(  ) );
-            XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_IS_MODERATED_COMMENT,
-                document.getIsModeratedComment(  ) );
+            XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_STATE_ID, document.getStateId( ) );
             XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_PUBLISHED_STATUS, document.getPublishedStatus(  ) );
             XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_COMMENT, document.getComment(  ) );
 

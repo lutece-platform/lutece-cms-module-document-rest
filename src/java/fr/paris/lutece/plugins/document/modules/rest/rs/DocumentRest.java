@@ -39,7 +39,6 @@ import fr.paris.lutece.plugins.document.business.DocumentType;
 import fr.paris.lutece.plugins.document.business.DocumentTypeHome;
 import fr.paris.lutece.plugins.document.business.IndexerAction;
 import fr.paris.lutece.plugins.document.business.attributes.DocumentAttribute;
-import fr.paris.lutece.plugins.document.business.attributes.DocumentAttributeHome;
 import fr.paris.lutece.plugins.document.business.category.Category;
 import fr.paris.lutece.plugins.document.business.category.CategoryHome;
 import fr.paris.lutece.plugins.document.business.portlet.DocumentListPortletHome;
@@ -84,13 +83,7 @@ import fr.paris.lutece.util.html.HtmlTemplate;
 import fr.paris.lutece.util.http.MultipartUtil;
 import fr.paris.lutece.util.string.StringUtil;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadBase.SizeLimitExceededException;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.lang.StringUtils;
-
 import java.sql.Timestamp;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -99,7 +92,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
@@ -110,6 +102,11 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadBase.SizeLimitExceededException;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -812,12 +809,6 @@ public class DocumentRest
         String strDocumentComment = multipartRequest.getParameter( DocumentRestConstants.PARAMETER_DOCUMENT_COMMENT );
         String strDateValidityBegin = multipartRequest.getParameter( DocumentRestConstants.PARAMETER_VALIDITY_BEGIN );
         String strDateValidityEnd = multipartRequest.getParameter( DocumentRestConstants.PARAMETER_VALIDITY_END );
-        String strAcceptSiteComments = ( multipartRequest.getParameter( DocumentRestConstants.PARAMETER_ACCEPT_SITE_COMMENTS ) != null )
-            ? multipartRequest.getParameter( DocumentRestConstants.PARAMETER_ACCEPT_SITE_COMMENTS ) : "0";
-        String strIsModeratedComment = ( multipartRequest.getParameter( DocumentRestConstants.PARAMETER_IS_MODERATED_COMMENT ) != null )
-            ? multipartRequest.getParameter( DocumentRestConstants.PARAMETER_IS_MODERATED_COMMENT ) : "0";
-        String strIsEmailNotifiedComment = ( multipartRequest.getParameter( DocumentRestConstants.PARAMETER_IS_EMAIL_NOTIFIED_COMMENT ) != null )
-            ? multipartRequest.getParameter( DocumentRestConstants.PARAMETER_IS_EMAIL_NOTIFIED_COMMENT ) : "0";
         String strMailingListId = ( multipartRequest.getParameter( DocumentRestConstants.PARAMETER_MAILING_LIST ) != null )
             ? multipartRequest.getParameter( DocumentRestConstants.PARAMETER_MAILING_LIST ) : "0";
         int nMailingListId = Integer.parseInt( strMailingListId );
@@ -903,9 +894,6 @@ public class DocumentRest
         document.setComment( strDocumentComment );
         document.setDateValidityBegin( dateValidityBegin );
         document.setDateValidityEnd( dateValidityEnd );
-        document.setAcceptSiteComments( Integer.parseInt( strAcceptSiteComments ) );
-        document.setIsModeratedComment( Integer.parseInt( strIsModeratedComment ) );
-        document.setIsEmailNotifiedComment( Integer.parseInt( strIsEmailNotifiedComment ) );
         document.setMailingListId( nMailingListId );
         document.setPageTemplateDocumentId( nPageTemplateDocumentId );
 
