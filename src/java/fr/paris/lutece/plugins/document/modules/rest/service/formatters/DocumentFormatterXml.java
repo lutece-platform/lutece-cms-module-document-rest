@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2014, Mairie de Paris
+ * Copyright (c) 2002-2018, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -44,12 +44,12 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
-/** 
+/**
  * DocumentFormatterXml
  */
 public class DocumentFormatterXml implements IFormatter<Document>
 {
-	/**
+    /**
      * {@inheritDoc}
      */
     public String format( Document document )
@@ -62,7 +62,7 @@ public class DocumentFormatterXml implements IFormatter<Document>
 
         XmlUtil.endElement( sbXml, DocumentRestConstants.TAG_RESPONSE );
 
-        return sbXml.toString(  );
+        return sbXml.toString( );
     }
 
     /**
@@ -77,38 +77,40 @@ public class DocumentFormatterXml implements IFormatter<Document>
 
         for ( Document document : listResources )
         {
-            XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_ID_DOCUMENT, document.getId(  ) );
+            XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_ID_DOCUMENT, document.getId( ) );
         }
 
         XmlUtil.endElement( sbXml, DocumentRestConstants.TAG_DOCUMENTS );
         XmlUtil.endElement( sbXml, DocumentRestConstants.TAG_RESPONSE );
 
-        return sbXml.toString(  );
+        return sbXml.toString( );
     }
 
     /**
      * Format Document
-     * @param sbXml xml
-     * @param doc document
+     * 
+     * @param sbXml
+     *            xml
+     * @param doc
+     *            document
      */
     private void formatDocument( StringBuffer sbXml, Document doc )
     {
         if ( doc != null )
         {
-            Document document = DocumentHome.findByPrimaryKey( doc.getId(  ) );
+            Document document = DocumentHome.findByPrimaryKey( doc.getId( ) );
             XmlUtil.beginElement( sbXml, DocumentRestConstants.TAG_DOCUMENT );
-            sbXml.append( document.getXmlWorkingContent(  ) );
+            sbXml.append( document.getXmlWorkingContent( ) );
 
-            XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_MAILING_LIST_ID, document.getMailingListId(  ) );
-            XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_PAGE_TEMPLATE_DOCUMENT_ID,
-                document.getPageTemplateDocumentId(  ) );
+            XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_MAILING_LIST_ID, document.getMailingListId( ) );
+            XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_PAGE_TEMPLATE_DOCUMENT_ID, document.getPageTemplateDocumentId( ) );
             XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_STATE_ID, document.getStateId( ) );
-            XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_PUBLISHED_STATUS, document.getPublishedStatus(  ) );
-            XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_COMMENT, document.getComment(  ) );
+            XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_PUBLISHED_STATUS, document.getPublishedStatus( ) );
+            XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_COMMENT, document.getComment( ) );
 
-            if ( StringUtils.isNotBlank( document.getXmlMetadata(  ) ) )
+            if ( StringUtils.isNotBlank( document.getXmlMetadata( ) ) )
             {
-                sbXml.append( document.getXmlMetadata(  ) );
+                sbXml.append( document.getXmlMetadata( ) );
             }
 
             XmlUtil.endElement( sbXml, DocumentRestConstants.TAG_DOCUMENT );

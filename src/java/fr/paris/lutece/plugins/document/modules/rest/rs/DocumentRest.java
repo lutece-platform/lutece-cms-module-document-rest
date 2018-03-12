@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2014, Mairie de Paris
+ * Copyright (c) 2002-2018, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -108,7 +108,6 @@ import org.apache.commons.fileupload.FileUploadBase.SizeLimitExceededException;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.lang.StringUtils;
 
-
 /**
  * DocumentRest
  */
@@ -116,48 +115,49 @@ import org.apache.commons.lang.StringUtils;
 public class DocumentRest
 {
     /**
-    * Get the wadl.xml content
-    * @param request {@link HttpServletRequest}
-    * @return the content of wadl.xml
-    */
+     * Get the wadl.xml content
+     * 
+     * @param request
+     *            {@link HttpServletRequest}
+     * @return the content of wadl.xml
+     */
     @GET
     @Path( DocumentRestConstants.PATH_WADL )
     @Produces( MediaType.APPLICATION_XML )
-    public String getWADL( @Context
-    HttpServletRequest request )
+    public String getWADL( @Context HttpServletRequest request )
     {
         StringBuilder sbBase = new StringBuilder( AppPathService.getBaseUrl( request ) );
 
-        if ( sbBase.toString(  ).endsWith( DocumentRestConstants.SLASH ) )
+        if ( sbBase.toString( ).endsWith( DocumentRestConstants.SLASH ) )
         {
-            sbBase.deleteCharAt( sbBase.length(  ) - 1 );
+            sbBase.deleteCharAt( sbBase.length( ) - 1 );
         }
 
         sbBase.append( RestConstants.BASE_PATH + DocumentPlugin.PLUGIN_NAME );
 
-        Map<String, Object> model = new HashMap<String, Object>(  );
-        model.put( DocumentRestConstants.MARK_BASE_URL, sbBase.toString(  ) );
+        Map<String, Object> model = new HashMap<String, Object>( );
+        model.put( DocumentRestConstants.MARK_BASE_URL, sbBase.toString( ) );
 
-        HtmlTemplate t = AppTemplateService.getTemplate( DocumentRestConstants.TEMPLATE_WADL, request.getLocale(  ),
-                model );
+        HtmlTemplate t = AppTemplateService.getTemplate( DocumentRestConstants.TEMPLATE_WADL, request.getLocale( ), model );
 
-        return t.getHtml(  );
+        return t.getHtml( );
     }
 
     /**
      * Get document spaces by id user
-     * @param strIdUser the id user
+     * 
+     * @param strIdUser
+     *            the id user
      * @return the xml of spaces
      */
     @GET
     @Path( DocumentRestConstants.PATH_GET_USER_SPACES )
     @Produces( MediaType.APPLICATION_XML )
-    public String getDocumentSpaces( @PathParam( DocumentRestConstants.PARAMETER_ID_USER )
-    String strIdUser )
+    public String getDocumentSpaces( @PathParam( DocumentRestConstants.PARAMETER_ID_USER ) String strIdUser )
     {
         if ( StringUtils.isNotBlank( strIdUser ) && StringUtils.isNumeric( strIdUser ) )
         {
-            //get AdminUser
+            // get AdminUser
             int nIdUser = Integer.parseInt( strIdUser );
             AdminUser user = AdminUserHome.findByPrimaryKey( nIdUser );
 
@@ -167,30 +167,30 @@ public class DocumentRest
                 user.setRoles( AdminUserHome.getRolesListForUser( nIdUser ) );
 
                 // Spaces
-                String strXmlSpaces = DocumentSpacesService.getInstance(  ).getXmlSpacesList( user );
+                String strXmlSpaces = DocumentSpacesService.getInstance( ).getXmlSpacesList( user );
 
                 return AddHeaderXml.addHeaderXml( strXmlSpaces );
             }
         }
 
-        return ResponseActionBuilderXml.getFailureResponseActionXML(  );
+        return ResponseActionBuilderXml.getFailureResponseActionXML( );
     }
 
     /**
      * Get list of all spaces selected by a specific code document type
-     * @param strCodeType The specific code document type
+     * 
+     * @param strCodeType
+     *            The specific code document type
      * @return the xml of spaces by code document type
      */
     @GET
     @Path( DocumentRestConstants.PATH_GET_SPACES_ALLOWING_DOCUMENT_CREATION_BY_CODE_DOCUMENT_TYPE )
     @Produces( MediaType.APPLICATION_XML )
-    public String getDocumentSpacesByCodeType( 
-        @PathParam( DocumentRestConstants.PARAMETER_CODE_DOCUMENT_TYPE )
-    String strCodeType )
+    public String getDocumentSpacesByCodeType( @PathParam( DocumentRestConstants.PARAMETER_CODE_DOCUMENT_TYPE ) String strCodeType )
     {
         if ( StringUtils.isNotBlank( strCodeType ) )
         {
-            //get AdminUser
+            // get AdminUser
             int nIdUser = 1;
             AdminUser user = AdminUserHome.findByPrimaryKey( nIdUser );
 
@@ -200,53 +200,54 @@ public class DocumentRest
                 user.setRoles( AdminUserHome.getRolesListForUser( nIdUser ) );
 
                 // Spaces
-                String strXmlSpaces = DocumentSpacesService.getInstance(  ).getXmlSpacesList( user, strCodeType );
+                String strXmlSpaces = DocumentSpacesService.getInstance( ).getXmlSpacesList( user, strCodeType );
 
                 return AddHeaderXml.addHeaderXml( strXmlSpaces );
             }
         }
 
-        return ResponseActionBuilderXml.getFailureResponseActionXML(  );
+        return ResponseActionBuilderXml.getFailureResponseActionXML( );
     }
 
     /**
      * Get all atributes of a selected document type
-     * @param strCodeType The code document type
+     * 
+     * @param strCodeType
+     *            The code document type
      * @return A xml list of all attributes of the document type
      */
     @GET
     @Path( DocumentRestConstants.PATH_GET_ATTRIBUTE_BY_DOCUMENT_TYPE )
     @Produces( MediaType.APPLICATION_XML )
-    public String getDocumentAttributesByCodeType( 
-        @PathParam( DocumentRestConstants.PARAMETER_CODE_DOCUMENT_TYPE )
-    String strCodeType )
+    public String getDocumentAttributesByCodeType( @PathParam( DocumentRestConstants.PARAMETER_CODE_DOCUMENT_TYPE ) String strCodeType )
     {
         if ( StringUtils.isNotBlank( strCodeType ) )
         {
-            //Attributes
-            String strXmlAttributes = DocumentAttributesService.getInstance(  ).getXmlAttributesList( strCodeType );
+            // Attributes
+            String strXmlAttributes = DocumentAttributesService.getInstance( ).getXmlAttributesList( strCodeType );
 
             return AddHeaderXml.addHeaderXml( strXmlAttributes );
         }
 
-        return ResponseActionBuilderXml.getFailureResponseActionXML(  );
+        return ResponseActionBuilderXml.getFailureResponseActionXML( );
     }
 
     /**
      * Get space by id
-     * @param strIdSpace the id space
+     * 
+     * @param strIdSpace
+     *            the id space
      * @return the xml of space informations
      */
     @GET
     @Path( DocumentRestConstants.PATH_GET_SPACE )
     @Produces( MediaType.APPLICATION_XML )
-    public List<DocumentSpace> getSpaceById( @PathParam( DocumentRestConstants.PARAMETER_ID_SPACE )
-    String strIdSpace )
+    public List<DocumentSpace> getSpaceById( @PathParam( DocumentRestConstants.PARAMETER_ID_SPACE ) String strIdSpace )
     {
         if ( StringUtils.isNotBlank( strIdSpace ) && StringUtils.isNumeric( strIdSpace ) )
         {
             int nIdSpace = Integer.parseInt( strIdSpace );
-            List<DocumentSpace> documentSpaceList = new ArrayList<DocumentSpace>(  );
+            List<DocumentSpace> documentSpaceList = new ArrayList<DocumentSpace>( );
             DocumentSpace documentSpace = DocumentSpaceHome.findByPrimaryKey( nIdSpace );
             documentSpaceList.add( documentSpace );
 
@@ -258,14 +259,15 @@ public class DocumentRest
 
     /**
      * Get documents list by id space
-     * @param strIdSpace the id space
+     * 
+     * @param strIdSpace
+     *            the id space
      * @return the xml of documents list
      */
     @GET
     @Path( DocumentRestConstants.PATH_GET_DOCUMENTS_LIST_BY_SPACE )
     @Produces( MediaType.APPLICATION_XML )
-    public List<Document> getDocumentsList( @PathParam( DocumentRestConstants.PARAMETER_ID_SPACE )
-    String strIdSpace )
+    public List<Document> getDocumentsList( @PathParam( DocumentRestConstants.PARAMETER_ID_SPACE ) String strIdSpace )
     {
         if ( StringUtils.isNotBlank( strIdSpace ) && StringUtils.isNumeric( strIdSpace ) )
         {
@@ -280,19 +282,20 @@ public class DocumentRest
 
     /**
      * Get document by id document
-     * @param strIdDocument the id document
+     * 
+     * @param strIdDocument
+     *            the id document
      * @return the xml of document
      */
     @GET
     @Path( DocumentRestConstants.PATH_GET_DOCUMENT )
     @Produces( MediaType.APPLICATION_XML )
-    public List<Document> getDocument( @PathParam( DocumentRestConstants.PARAMETER_ID_DOCUMENT )
-    String strIdDocument )
+    public List<Document> getDocument( @PathParam( DocumentRestConstants.PARAMETER_ID_DOCUMENT ) String strIdDocument )
     {
         if ( StringUtils.isNotBlank( strIdDocument ) && StringUtils.isNumeric( strIdDocument ) )
         {
             int nIdDocument = Integer.parseInt( strIdDocument );
-            List<Document> documentList = new ArrayList<Document>(  );
+            List<Document> documentList = new ArrayList<Document>( );
             Document document = DocumentHome.findByPrimaryKey( nIdDocument );
             documentList.add( document );
 
@@ -304,80 +307,82 @@ public class DocumentRest
 
     /**
      * Get different type document fields to create it
-     * @param strCodeDocumentType type document code
+     * 
+     * @param strCodeDocumentType
+     *            type document code
      * @return
      */
     @GET
     @Path( DocumentRestConstants.PATH_CREATE_GET_FIELDS )
     @Produces( MediaType.APPLICATION_XML )
-    public String getCreatingDocumentFields( 
-        @PathParam( DocumentRestConstants.PARAMETER_CODE_DOCUMENT_TYPE )
-    String strCodeDocumentType )
+    public String getCreatingDocumentFields( @PathParam( DocumentRestConstants.PARAMETER_CODE_DOCUMENT_TYPE ) String strCodeDocumentType )
     {
         if ( StringUtils.isNotBlank( strCodeDocumentType ) )
         {
             return FieldsToCreateDocumentBuilderXml.buildXml( strCodeDocumentType );
         }
 
-        return ResponseActionBuilderXml.getFailureResponseActionXML(  );
+        return ResponseActionBuilderXml.getFailureResponseActionXML( );
     }
 
     /**
-    * Get list of different types document
-    * @return the list of Document Type on XML file
-    */
+     * Get list of different types document
+     * 
+     * @return the list of Document Type on XML file
+     */
     @GET
     @Path( DocumentRestConstants.PATH_GET_LIST_DOCUMENT_TYPE )
     @Produces( MediaType.APPLICATION_XML )
-    public String getListDocumentTypes(  )
+    public String getListDocumentTypes( )
     {
         // Types
-        String strXmlTypesList = DocumentTypeService.getInstance(  ).getXmlDocumentTypesList(  );
+        String strXmlTypesList = DocumentTypeService.getInstance( ).getXmlDocumentTypesList( );
 
         return AddHeaderXml.addHeaderXml( strXmlTypesList );
     }
 
     /**
      * Remove the document by id
-     * @param strIdDocument id document
+     * 
+     * @param strIdDocument
+     *            id document
      * @return
      */
     @DELETE
     @Path( DocumentRestConstants.PATH_REMOVE_DOCUMENT )
     @Produces( MediaType.APPLICATION_XML )
-    public String getDeletingDocument( @PathParam( DocumentRestConstants.PARAMETER_ID_DOCUMENT )
-    String strIdDocument )
+    public String getDeletingDocument( @PathParam( DocumentRestConstants.PARAMETER_ID_DOCUMENT ) String strIdDocument )
     {
         if ( StringUtils.isNotBlank( strIdDocument ) && StringUtils.isNumeric( strIdDocument ) )
         {
             int nDocumentId = Integer.parseInt( strIdDocument );
             DocumentHome.remove( nDocumentId );
 
-            return ResponseActionBuilderXml.getSuccessResponseActionXML(  );
+            return ResponseActionBuilderXml.getSuccessResponseActionXML( );
         }
 
-        return ResponseActionBuilderXml.getFailureResponseActionXML(  );
+        return ResponseActionBuilderXml.getFailureResponseActionXML( );
     }
 
     /**
      * Get the list of document portlets
-     * @param strIdDocument id document
+     * 
+     * @param strIdDocument
+     *            id document
      * @return listPortlet portlets list (will be formatted in xml format)
      */
     @GET
     @Path( DocumentRestConstants.PATH_PORTLETS_DOCUMENT )
     @Produces( MediaType.APPLICATION_XML )
-    public List<ReferenceItem> getPortletsToAssignDocument( 
-        @PathParam( DocumentRestConstants.PARAMETER_ID_DOCUMENT )
-    String strIdDocument )
+    public List<ReferenceItem> getPortletsToAssignDocument( @PathParam( DocumentRestConstants.PARAMETER_ID_DOCUMENT ) String strIdDocument )
     {
         if ( StringUtils.isNotBlank( strIdDocument ) && StringUtils.isNumeric( strIdDocument ) )
         {
             int nDocumentId = Integer.parseInt( strIdDocument );
-            PortletOrder pOrder = new PortletOrder(  );
-            PortletFilter pFilter = new PortletFilter(  );
-            List<ReferenceItem> listPortlet = (List<ReferenceItem>) DocumentPortletHome.findByCodeDocumentTypeAndCategory( nDocumentId,
-                    DocumentHome.findByPrimaryKey( nDocumentId ).getCodeDocumentType(  ), pOrder, pFilter );
+            PortletOrder pOrder = new PortletOrder( );
+            PortletFilter pFilter = new PortletFilter( );
+            List<ReferenceItem> listPortlet = (List<ReferenceItem>) DocumentPortletHome.findByCodeDocumentTypeAndCategory( nDocumentId, DocumentHome
+                    .findByPrimaryKey( nDocumentId ).getCodeDocumentType( ), pOrder, pFilter );
 
             return listPortlet;
         }
@@ -387,23 +392,22 @@ public class DocumentRest
 
     /**
      * Get the list of list documents portlets
+     * 
      * @param strIdDocument
      * @return listPortlet portlets list (will be formatted in xml format)
      */
     @GET
     @Path( DocumentRestConstants.PATH_PORTLETS_LIST_DOCUMENT )
     @Produces( MediaType.APPLICATION_XML )
-    public List<ReferenceItem> getPortletsListToAssignDocument( 
-        @PathParam( DocumentRestConstants.PARAMETER_ID_DOCUMENT )
-    String strIdDocument )
+    public List<ReferenceItem> getPortletsListToAssignDocument( @PathParam( DocumentRestConstants.PARAMETER_ID_DOCUMENT ) String strIdDocument )
     {
         if ( StringUtils.isNotBlank( strIdDocument ) && StringUtils.isNumeric( strIdDocument ) )
         {
             int nDocumentId = Integer.parseInt( strIdDocument );
-            PortletOrder pOrder = new PortletOrder(  );
-            PortletFilter pFilter = new PortletFilter(  );
-            List<ReferenceItem> listPortletList = (List<ReferenceItem>) DocumentListPortletHome.findByCodeDocumentTypeAndCategory( nDocumentId,
-                    DocumentHome.findByPrimaryKey( nDocumentId ).getCodeDocumentType(  ), pOrder, pFilter );
+            PortletOrder pOrder = new PortletOrder( );
+            PortletFilter pFilter = new PortletFilter( );
+            List<ReferenceItem> listPortletList = (List<ReferenceItem>) DocumentListPortletHome.findByCodeDocumentTypeAndCategory( nDocumentId, DocumentHome
+                    .findByPrimaryKey( nDocumentId ).getCodeDocumentType( ), pOrder, pFilter );
 
             return listPortletList;
         }
@@ -413,15 +417,15 @@ public class DocumentRest
 
     /**
      * Get the list of document/list documents portlets where the document is assigned
-     * @param strIdDocument id document
+     * 
+     * @param strIdDocument
+     *            id document
      * @return listDocumentPublication DocumentPublication list (will be formatted in xml format)
      */
     @GET
     @Path( DocumentRestConstants.PATH_PORTLETS_DOCUMENT_ASSIGNED )
     @Produces( MediaType.APPLICATION_XML )
-    public List<DocumentPublication> getPortletsToPublishDocument( 
-        @PathParam( DocumentRestConstants.PARAMETER_ID_DOCUMENT )
-    String strIdDocument )
+    public List<DocumentPublication> getPortletsToPublishDocument( @PathParam( DocumentRestConstants.PARAMETER_ID_DOCUMENT ) String strIdDocument )
     {
         if ( StringUtils.isNotBlank( strIdDocument ) && StringUtils.isNumeric( strIdDocument ) )
         {
@@ -437,26 +441,27 @@ public class DocumentRest
 
     /**
      * Method to submit or not a document to validate it
-     * @param strIdDocument id document
-     * @param strIdAction id action
-     * @param strIdUser id user
-     * @param request request
+     * 
+     * @param strIdDocument
+     *            id document
+     * @param strIdAction
+     *            id action
+     * @param strIdUser
+     *            id user
+     * @param request
+     *            request
      * @return response xml
      */
     @POST
     @Path( DocumentRestConstants.PATH_DOCUMENT_SUBMIT )
     @Produces( MediaType.APPLICATION_XML )
     @Consumes( MediaType.APPLICATION_FORM_URLENCODED )
-    public String doSubmitOrUnsubmitDocumentToValidate( 
-        @FormParam( DocumentRestConstants.PARAMETER_ID_DOCUMENT )
-    String strIdDocument, @FormParam( DocumentRestConstants.PARAMETER_ID_ACTION )
-    String strIdAction, @FormParam( DocumentRestConstants.PARAMETER_ID_USER )
-    String strIdUser, @Context
-    HttpServletRequest request )
+    public String doSubmitOrUnsubmitDocumentToValidate( @FormParam( DocumentRestConstants.PARAMETER_ID_DOCUMENT ) String strIdDocument,
+            @FormParam( DocumentRestConstants.PARAMETER_ID_ACTION ) String strIdAction, @FormParam( DocumentRestConstants.PARAMETER_ID_USER ) String strIdUser,
+            @Context HttpServletRequest request )
     {
-        if ( StringUtils.isNotBlank( strIdUser ) && StringUtils.isNumeric( strIdUser ) &&
-                StringUtils.isNotBlank( strIdAction ) && StringUtils.isNumeric( strIdAction ) &&
-                StringUtils.isNotBlank( strIdDocument ) && StringUtils.isNumeric( strIdDocument ) )
+        if ( StringUtils.isNotBlank( strIdUser ) && StringUtils.isNumeric( strIdUser ) && StringUtils.isNotBlank( strIdAction )
+                && StringUtils.isNumeric( strIdAction ) && StringUtils.isNotBlank( strIdDocument ) && StringUtils.isNumeric( strIdDocument ) )
         {
             int nIdAction = Integer.parseInt( strIdAction );
             int nIdDocument = Integer.parseInt( strIdDocument );
@@ -471,52 +476,54 @@ public class DocumentRest
                 Document document = DocumentHome.findByPrimaryKeyWithoutBinaries( nIdDocument );
                 DocumentAction action = DocumentActionHome.findByPrimaryKey( nIdAction );
 
-                if ( ( action == null ) || ( action.getFinishDocumentState(  ) == null ) || ( document == null ) ||
-                        !DocumentService.getInstance(  )
-                                            .isAuthorizedAdminDocument( document.getSpaceId(  ),
-                            document.getCodeDocumentType(  ), action.getPermission(  ), user ) )
+                if ( ( action == null )
+                        || ( action.getFinishDocumentState( ) == null )
+                        || ( document == null )
+                        || !DocumentService.getInstance( ).isAuthorizedAdminDocument( document.getSpaceId( ), document.getCodeDocumentType( ),
+                                action.getPermission( ), user ) )
                 {
-                    return ResponseActionBuilderXml.getFailureResponseActionXML(  );
+                    return ResponseActionBuilderXml.getFailureResponseActionXML( );
                 }
 
                 try
                 {
-                    DocumentService.getInstance(  )
-                                   .changeDocumentState( document, user, action.getFinishDocumentState(  ).getId(  ) );
+                    DocumentService.getInstance( ).changeDocumentState( document, user, action.getFinishDocumentState( ).getId( ) );
                 }
-                catch ( DocumentException e )
+                catch( DocumentException e )
                 {
-                    return ResponseActionBuilderXml.getFailureResponseActionXML(  );
+                    return ResponseActionBuilderXml.getFailureResponseActionXML( );
                 }
 
-                return ResponseActionBuilderXml.getSuccessResponseActionXML(  );
+                return ResponseActionBuilderXml.getSuccessResponseActionXML( );
             }
         }
 
-        return ResponseActionBuilderXml.getFailureResponseActionXML(  );
+        return ResponseActionBuilderXml.getFailureResponseActionXML( );
     }
 
     /**
      * Validate a document
-     * @param strIdDocument id document
-     * @param strIdAction id action
-     * @param strIdUser id user
-     * @param request request
+     * 
+     * @param strIdDocument
+     *            id document
+     * @param strIdAction
+     *            id action
+     * @param strIdUser
+     *            id user
+     * @param request
+     *            request
      * @return response
      */
     @POST
     @Path( DocumentRestConstants.PATH_DOCUMENT_VALIDATE )
     @Produces( MediaType.APPLICATION_XML )
     @Consumes( MediaType.APPLICATION_FORM_URLENCODED )
-    public String doValidateDocument( @FormParam( DocumentRestConstants.PARAMETER_ID_DOCUMENT )
-    String strIdDocument, @FormParam( DocumentRestConstants.PARAMETER_ID_ACTION )
-    String strIdAction, @FormParam( DocumentRestConstants.PARAMETER_ID_USER )
-    String strIdUser, @Context
-    HttpServletRequest request )
+    public String doValidateDocument( @FormParam( DocumentRestConstants.PARAMETER_ID_DOCUMENT ) String strIdDocument,
+            @FormParam( DocumentRestConstants.PARAMETER_ID_ACTION ) String strIdAction, @FormParam( DocumentRestConstants.PARAMETER_ID_USER ) String strIdUser,
+            @Context HttpServletRequest request )
     {
-        if ( StringUtils.isNotBlank( strIdUser ) && StringUtils.isNumeric( strIdUser ) &&
-                StringUtils.isNotBlank( strIdAction ) && StringUtils.isNumeric( strIdAction ) &&
-                StringUtils.isNotBlank( strIdDocument ) && StringUtils.isNumeric( strIdDocument ) )
+        if ( StringUtils.isNotBlank( strIdUser ) && StringUtils.isNumeric( strIdUser ) && StringUtils.isNotBlank( strIdAction )
+                && StringUtils.isNumeric( strIdAction ) && StringUtils.isNotBlank( strIdDocument ) && StringUtils.isNumeric( strIdDocument ) )
         {
             int nIdAction = Integer.parseInt( strIdAction );
             int nIdDocument = Integer.parseInt( strIdDocument );
@@ -531,180 +538,182 @@ public class DocumentRest
                 Document document = DocumentHome.findByPrimaryKeyWithoutBinaries( nIdDocument );
                 DocumentAction action = DocumentActionHome.findByPrimaryKey( nIdAction );
 
-                if ( ( action == null ) || ( action.getFinishDocumentState(  ) == null ) || ( document == null ) ||
-                        !DocumentService.getInstance(  )
-                                            .isAuthorizedAdminDocument( document.getSpaceId(  ),
-                            document.getCodeDocumentType(  ), action.getPermission(  ), user ) )
+                if ( ( action == null )
+                        || ( action.getFinishDocumentState( ) == null )
+                        || ( document == null )
+                        || !DocumentService.getInstance( ).isAuthorizedAdminDocument( document.getSpaceId( ), document.getCodeDocumentType( ),
+                                action.getPermission( ), user ) )
                 {
-                    return ResponseActionBuilderXml.getFailureResponseActionXML(  );
+                    return ResponseActionBuilderXml.getFailureResponseActionXML( );
                 }
 
                 try
                 {
-                    DocumentService.getInstance(  )
-                                   .validateDocument( document, user, action.getFinishDocumentState(  ).getId(  ) );
+                    DocumentService.getInstance( ).validateDocument( document, user, action.getFinishDocumentState( ).getId( ) );
                 }
-                catch ( DocumentException e )
+                catch( DocumentException e )
                 {
-                    return ResponseActionBuilderXml.getFailureResponseActionXML(  );
+                    return ResponseActionBuilderXml.getFailureResponseActionXML( );
                 }
 
-                IndexationService.addIndexerAction( strIdDocument, DocumentIndexer.INDEXER_NAME,
-                    IndexerAction.TASK_MODIFY, IndexationService.ALL_DOCUMENT );
+                IndexationService.addIndexerAction( strIdDocument, DocumentIndexer.INDEXER_NAME, IndexerAction.TASK_MODIFY, IndexationService.ALL_DOCUMENT );
 
-                DocumentIndexerUtils.addIndexerAction( strIdDocument, IndexerAction.TASK_MODIFY,
-                    IndexationService.ALL_DOCUMENT );
+                DocumentIndexerUtils.addIndexerAction( strIdDocument, IndexerAction.TASK_MODIFY, IndexationService.ALL_DOCUMENT );
 
-                return ResponseActionBuilderXml.getSuccessResponseActionXML(  );
+                return ResponseActionBuilderXml.getSuccessResponseActionXML( );
             }
             else
             {
-                return ResponseActionBuilderXml.getFailureResponseActionXML(  );
+                return ResponseActionBuilderXml.getFailureResponseActionXML( );
             }
         }
 
-        return ResponseActionBuilderXml.getFailureResponseActionXML(  );
+        return ResponseActionBuilderXml.getFailureResponseActionXML( );
     }
 
     /**
      * Assign a document to the portlet
-     * @param strIdDocument id document
-     * @param strIdPortlet id portlet
-     * @param request request
+     * 
+     * @param strIdDocument
+     *            id document
+     * @param strIdPortlet
+     *            id portlet
+     * @param request
+     *            request
      * @return response xml
      */
     @POST
     @Path( DocumentRestConstants.PATH_DOCUMENT_ASSIGN_PORTLET )
     @Produces( MediaType.APPLICATION_XML )
     @Consumes( MediaType.APPLICATION_FORM_URLENCODED )
-    public String doAssignDocumentToPortlet( 
-        @FormParam( DocumentRestConstants.PARAMETER_ID_DOCUMENT )
-    String strIdDocument, @FormParam( DocumentRestConstants.PARAMETER_ID_PORTLET )
-    String strIdPortlet, @Context
-    HttpServletRequest request )
+    public String doAssignDocumentToPortlet( @FormParam( DocumentRestConstants.PARAMETER_ID_DOCUMENT ) String strIdDocument,
+            @FormParam( DocumentRestConstants.PARAMETER_ID_PORTLET ) String strIdPortlet, @Context HttpServletRequest request )
     {
-        if ( StringUtils.isNotBlank( strIdPortlet ) && StringUtils.isNumeric( strIdPortlet ) &&
-                StringUtils.isNotBlank( strIdDocument ) && StringUtils.isNumeric( strIdDocument ) )
+        if ( StringUtils.isNotBlank( strIdPortlet ) && StringUtils.isNumeric( strIdPortlet ) && StringUtils.isNotBlank( strIdDocument )
+                && StringUtils.isNumeric( strIdDocument ) )
         {
             int nIdPortlet = Integer.parseInt( strIdPortlet );
             int nIdDocument = Integer.parseInt( strIdDocument );
-            PublishingService.getInstance(  ).assign( nIdDocument, nIdPortlet );
+            PublishingService.getInstance( ).assign( nIdDocument, nIdPortlet );
 
-            return ResponseActionBuilderXml.getSuccessResponseActionXML(  );
+            return ResponseActionBuilderXml.getSuccessResponseActionXML( );
         }
 
-        return ResponseActionBuilderXml.getFailureResponseActionXML(  );
+        return ResponseActionBuilderXml.getFailureResponseActionXML( );
     }
 
     /**
      * Unassign a document to the portlet
-     * @param strIdDocument id document
-     * @param strIdPortlet id portlet
-     * @param request request
+     * 
+     * @param strIdDocument
+     *            id document
+     * @param strIdPortlet
+     *            id portlet
+     * @param request
+     *            request
      * @return response xml
      */
     @POST
     @Path( DocumentRestConstants.PATH_DOCUMENT_UNASSIGN_PORTLET )
     @Produces( MediaType.APPLICATION_XML )
     @Consumes( MediaType.APPLICATION_FORM_URLENCODED )
-    public String doUnassignDocumentToPortlet( 
-        @FormParam( DocumentRestConstants.PARAMETER_ID_DOCUMENT )
-    String strIdDocument, @FormParam( DocumentRestConstants.PARAMETER_ID_PORTLET )
-    String strIdPortlet, @Context
-    HttpServletRequest request )
+    public String doUnassignDocumentToPortlet( @FormParam( DocumentRestConstants.PARAMETER_ID_DOCUMENT ) String strIdDocument,
+            @FormParam( DocumentRestConstants.PARAMETER_ID_PORTLET ) String strIdPortlet, @Context HttpServletRequest request )
     {
-        if ( StringUtils.isNotBlank( strIdPortlet ) && StringUtils.isNumeric( strIdPortlet ) &&
-                StringUtils.isNotBlank( strIdDocument ) && StringUtils.isNumeric( strIdDocument ) )
+        if ( StringUtils.isNotBlank( strIdPortlet ) && StringUtils.isNumeric( strIdPortlet ) && StringUtils.isNotBlank( strIdDocument )
+                && StringUtils.isNumeric( strIdDocument ) )
         {
             int nIdPortlet = Integer.parseInt( strIdPortlet );
             int nIdDocument = Integer.parseInt( strIdDocument );
-            PublishingService.getInstance(  ).unAssign( nIdDocument, nIdPortlet );
+            PublishingService.getInstance( ).unAssign( nIdDocument, nIdPortlet );
 
-            return ResponseActionBuilderXml.getSuccessResponseActionXML(  );
+            return ResponseActionBuilderXml.getSuccessResponseActionXML( );
         }
 
-        return ResponseActionBuilderXml.getFailureResponseActionXML(  );
+        return ResponseActionBuilderXml.getFailureResponseActionXML( );
     }
 
     /**
      * Publish a document
-     * @param strIdDocument id document
-     * @param strIdPortlet id portlet
-     * @param request request
+     * 
+     * @param strIdDocument
+     *            id document
+     * @param strIdPortlet
+     *            id portlet
+     * @param request
+     *            request
      * @return response xml
      */
     @POST
     @Path( DocumentRestConstants.PATH_DOCUMENT_PUBLISH )
     @Produces( MediaType.APPLICATION_XML )
     @Consumes( MediaType.APPLICATION_FORM_URLENCODED )
-    public String doPublishDocument( @FormParam( DocumentRestConstants.PARAMETER_ID_DOCUMENT )
-    String strIdDocument, @FormParam( DocumentRestConstants.PARAMETER_ID_PORTLET )
-    String strIdPortlet, @Context
-    HttpServletRequest request )
+    public String doPublishDocument( @FormParam( DocumentRestConstants.PARAMETER_ID_DOCUMENT ) String strIdDocument,
+            @FormParam( DocumentRestConstants.PARAMETER_ID_PORTLET ) String strIdPortlet, @Context HttpServletRequest request )
     {
-        if ( StringUtils.isNotBlank( strIdPortlet ) && StringUtils.isNumeric( strIdPortlet ) &&
-                StringUtils.isNotBlank( strIdDocument ) && StringUtils.isNumeric( strIdDocument ) )
+        if ( StringUtils.isNotBlank( strIdPortlet ) && StringUtils.isNumeric( strIdPortlet ) && StringUtils.isNotBlank( strIdDocument )
+                && StringUtils.isNumeric( strIdDocument ) )
         {
             int nIdPortlet = Integer.parseInt( strIdPortlet );
             int nIdDocument = Integer.parseInt( strIdDocument );
-            PublishingService.getInstance(  ).publish( nIdDocument, nIdPortlet );
+            PublishingService.getInstance( ).publish( nIdDocument, nIdPortlet );
 
-            return ResponseActionBuilderXml.getSuccessResponseActionXML(  );
+            return ResponseActionBuilderXml.getSuccessResponseActionXML( );
         }
 
-        return ResponseActionBuilderXml.getFailureResponseActionXML(  );
+        return ResponseActionBuilderXml.getFailureResponseActionXML( );
     }
 
     /**
      * Unpublish a document
-     * @param strIdDocument id document
-     * @param strIdPortlet id portlet
-     * @param request request
+     * 
+     * @param strIdDocument
+     *            id document
+     * @param strIdPortlet
+     *            id portlet
+     * @param request
+     *            request
      * @return response xml
      */
     @POST
     @Path( DocumentRestConstants.PATH_DOCUMENT_UNPUBLISH )
     @Produces( MediaType.APPLICATION_XML )
     @Consumes( MediaType.APPLICATION_FORM_URLENCODED )
-    public String doUnpublishDocument( @FormParam( DocumentRestConstants.PARAMETER_ID_DOCUMENT )
-    String strIdDocument, @FormParam( DocumentRestConstants.PARAMETER_ID_PORTLET )
-    String strIdPortlet, @Context
-    HttpServletRequest request )
+    public String doUnpublishDocument( @FormParam( DocumentRestConstants.PARAMETER_ID_DOCUMENT ) String strIdDocument,
+            @FormParam( DocumentRestConstants.PARAMETER_ID_PORTLET ) String strIdPortlet, @Context HttpServletRequest request )
     {
-        if ( StringUtils.isNotBlank( strIdPortlet ) && StringUtils.isNumeric( strIdPortlet ) &&
-                StringUtils.isNotBlank( strIdDocument ) && StringUtils.isNumeric( strIdDocument ) )
+        if ( StringUtils.isNotBlank( strIdPortlet ) && StringUtils.isNumeric( strIdPortlet ) && StringUtils.isNotBlank( strIdDocument )
+                && StringUtils.isNumeric( strIdDocument ) )
         {
             int nIdPortlet = Integer.parseInt( strIdPortlet );
             int nIdDocument = Integer.parseInt( strIdDocument );
-            PublishingService.getInstance(  ).unPublish( nIdDocument, nIdPortlet );
+            PublishingService.getInstance( ).unPublish( nIdDocument, nIdPortlet );
 
-            return ResponseActionBuilderXml.getSuccessResponseActionXML(  );
+            return ResponseActionBuilderXml.getSuccessResponseActionXML( );
         }
 
-        return ResponseActionBuilderXml.getFailureResponseActionXML(  );
+        return ResponseActionBuilderXml.getFailureResponseActionXML( );
     }
 
     /**
      * Create document
-     * @param request request
+     * 
+     * @param request
+     *            request
      * @return response xml
      */
     @POST
     @Path( DocumentRestConstants.PATH_CREATE_DOCUMENT )
     @Consumes( MediaType.MULTIPART_FORM_DATA )
-    @Produces( {MediaType.TEXT_HTML,
-        MediaType.TEXT_XML,
-        MediaType.APPLICATION_XML,
-        MediaType.APPLICATION_JSON
+    @Produces( {
+            MediaType.TEXT_HTML, MediaType.TEXT_XML, MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON
     } )
-    public String doCreateDocument( @Context
-    HttpServletRequest request )
+    public String doCreateDocument( @Context HttpServletRequest request )
     {
         String strResponseXml = StringUtils.EMPTY;
-        int nSizeThreshold = AppPropertiesService.getPropertyInt( DocumentRestConstants.PROPERTY_MULTIPART_SIZE_THRESHOLD,
-                -1 );
-        boolean bActivateNormalizeFileName = Boolean.getBoolean( AppPropertiesService.getProperty( 
-                    DocumentRestConstants.PROPERTY_MULTIPART_NORMALIZE_FILE_NAME ) );
+        int nSizeThreshold = AppPropertiesService.getPropertyInt( DocumentRestConstants.PROPERTY_MULTIPART_SIZE_THRESHOLD, -1 );
+        boolean bActivateNormalizeFileName = Boolean.getBoolean( AppPropertiesService
+                .getProperty( DocumentRestConstants.PROPERTY_MULTIPART_NORMALIZE_FILE_NAME ) );
         String strRequestSizeMax = AppPropertiesService.getProperty( DocumentRestConstants.PROPERTY_MULTIPART_REQUEST_SIZE_MAX );
         long nRequestSizeMax = 0;
 
@@ -715,21 +724,20 @@ public class DocumentRest
 
         try
         {
-            MultipartHttpServletRequest multipartRequest = MultipartUtil.convert( nSizeThreshold, nRequestSizeMax,
-                    bActivateNormalizeFileName, request );
+            MultipartHttpServletRequest multipartRequest = MultipartUtil.convert( nSizeThreshold, nRequestSizeMax, bActivateNormalizeFileName, request );
 
             if ( multipartRequest != null )
             {
                 strResponseXml = createDocument( multipartRequest );
             }
         }
-        catch ( SizeLimitExceededException e )
+        catch( SizeLimitExceededException e )
         {
-            return ResponseActionBuilderXml.getFailureResponseActionXML(  );
+            return ResponseActionBuilderXml.getFailureResponseActionXML( );
         }
-        catch ( FileUploadException e )
+        catch( FileUploadException e )
         {
-            return ResponseActionBuilderXml.getFailureResponseActionXML(  );
+            return ResponseActionBuilderXml.getFailureResponseActionXML( );
         }
 
         return strResponseXml;
@@ -737,10 +745,10 @@ public class DocumentRest
 
     private String createDocument( MultipartHttpServletRequest multipartRequest )
     {
-        if ( StringUtils.isNotBlank( multipartRequest.getParameter( DocumentRestConstants.PARAMETER_ID_USER ) ) &&
-                StringUtils.isNumeric( multipartRequest.getParameter( DocumentRestConstants.PARAMETER_ID_USER ) ) )
+        if ( StringUtils.isNotBlank( multipartRequest.getParameter( DocumentRestConstants.PARAMETER_ID_USER ) )
+                && StringUtils.isNumeric( multipartRequest.getParameter( DocumentRestConstants.PARAMETER_ID_USER ) ) )
         {
-            //Create AdminUser
+            // Create AdminUser
             int nIdUser = Integer.parseInt( multipartRequest.getParameter( DocumentRestConstants.PARAMETER_ID_USER ) );
             AdminUser user = AdminUserHome.findByPrimaryKey( nIdUser );
 
@@ -751,57 +759,57 @@ public class DocumentRest
 
                 String strDocumentTypeCode = multipartRequest.getParameter( DocumentRestConstants.PARAMETER_CODE_DOCUMENT_TYPE );
 
-                if ( !DocumentService.getInstance(  )
-                                         .isAuthorizedAdminDocument( Integer.parseInt( multipartRequest.getParameter( 
-                                    DocumentRestConstants.PARAMETER_ID_SPACE ) ), strDocumentTypeCode,
-                            DocumentTypeResourceIdService.PERMISSION_CREATE, user ) )
+                if ( !DocumentService.getInstance( ).isAuthorizedAdminDocument(
+                        Integer.parseInt( multipartRequest.getParameter( DocumentRestConstants.PARAMETER_ID_SPACE ) ), strDocumentTypeCode,
+                        DocumentTypeResourceIdService.PERMISSION_CREATE, user ) )
                 {
-                    return ResponseActionBuilderXml.getFailureResponseActionXML(  );
+                    return ResponseActionBuilderXml.getFailureResponseActionXML( );
                 }
 
-                Document document = new Document(  );
+                Document document = new Document( );
                 document.setCodeDocumentType( strDocumentTypeCode );
 
-                String strError = getDocumentData( multipartRequest, document, multipartRequest.getLocale(  ) );
+                String strError = getDocumentData( multipartRequest, document, multipartRequest.getLocale( ) );
 
                 if ( strError != null )
                 {
                     return strError;
                 }
 
-                document.setSpaceId( Integer.parseInt( multipartRequest.getParameter( 
-                            DocumentRestConstants.PARAMETER_ID_SPACE ) ) );
+                document.setSpaceId( Integer.parseInt( multipartRequest.getParameter( DocumentRestConstants.PARAMETER_ID_SPACE ) ) );
                 document.setStateId( 1 );
-                document.setCreatorId( user.getUserId(  ) );
+                document.setCreatorId( user.getUserId( ) );
 
                 try
                 {
-                    DocumentService.getInstance(  ).createDocument( document, user );
+                    DocumentService.getInstance( ).createDocument( document, user );
                 }
-                catch ( DocumentException e )
+                catch( DocumentException e )
                 {
-                    return ResponseActionBuilderXml.getFailureResponseActionXML(  );
+                    return ResponseActionBuilderXml.getFailureResponseActionXML( );
                 }
 
                 // process
-                ResourceEnhancer.doCreateResourceAddOn( multipartRequest, DocumentRestConstants.PROPERTY_RESOURCE_TYPE,
-                    document.getId(  ) );
+                ResourceEnhancer.doCreateResourceAddOn( multipartRequest, DocumentRestConstants.PROPERTY_RESOURCE_TYPE, document.getId( ) );
             }
         }
         else
         {
-            return ResponseActionBuilderXml.getFailureResponseActionXML(  );
+            return ResponseActionBuilderXml.getFailureResponseActionXML( );
         }
 
-        return ResponseActionBuilderXml.getSuccessResponseActionXML(  );
+        return ResponseActionBuilderXml.getSuccessResponseActionXML( );
     }
 
     /**
-    * Return the data of a document object
-    * @param multipartRequest map of parameters
-    * @param document The document object
-    * @return data of document object
-    */
+     * Return the data of a document object
+     * 
+     * @param multipartRequest
+     *            map of parameters
+     * @param document
+     *            The document object
+     * @return data of document object
+     */
     public static String getDocumentData( MultipartHttpServletRequest multipartRequest, Document document, Locale locale )
     {
         String strDocumentTitle = multipartRequest.getParameter( DocumentRestConstants.PARAMETER_DOCUMENT_TITLE );
@@ -809,29 +817,28 @@ public class DocumentRest
         String strDocumentComment = multipartRequest.getParameter( DocumentRestConstants.PARAMETER_DOCUMENT_COMMENT );
         String strDateValidityBegin = multipartRequest.getParameter( DocumentRestConstants.PARAMETER_VALIDITY_BEGIN );
         String strDateValidityEnd = multipartRequest.getParameter( DocumentRestConstants.PARAMETER_VALIDITY_END );
-        String strMailingListId = ( multipartRequest.getParameter( DocumentRestConstants.PARAMETER_MAILING_LIST ) != null )
-            ? multipartRequest.getParameter( DocumentRestConstants.PARAMETER_MAILING_LIST ) : "0";
+        String strMailingListId = ( multipartRequest.getParameter( DocumentRestConstants.PARAMETER_MAILING_LIST ) != null ) ? multipartRequest
+                .getParameter( DocumentRestConstants.PARAMETER_MAILING_LIST ) : "0";
         int nMailingListId = Integer.parseInt( strMailingListId );
-        String strPageTemplateDocumentId = ( multipartRequest.getParameter( DocumentRestConstants.PARAMETER_PAGE_TEMPLATE_DOCUMENT_ID ) != null )
-            ? multipartRequest.getParameter( DocumentRestConstants.PARAMETER_PAGE_TEMPLATE_DOCUMENT_ID ) : "0";
+        String strPageTemplateDocumentId = ( multipartRequest.getParameter( DocumentRestConstants.PARAMETER_PAGE_TEMPLATE_DOCUMENT_ID ) != null ) ? multipartRequest
+                .getParameter( DocumentRestConstants.PARAMETER_PAGE_TEMPLATE_DOCUMENT_ID ) : "0";
         int nPageTemplateDocumentId = Integer.parseInt( strPageTemplateDocumentId );
-        String[] listCategory = multipartRequest.getParameterValues( DocumentRestConstants.PARAMETER_CATEGORY );
+        String [ ] listCategory = multipartRequest.getParameterValues( DocumentRestConstants.PARAMETER_CATEGORY );
 
         // Check for mandatory value
-        if ( strDocumentTitle.trim(  ).equals( "" ) || strDocumentSummary.trim(  ).equals( "" ) )
+        if ( strDocumentTitle.trim( ).equals( "" ) || strDocumentSummary.trim( ).equals( "" ) )
         {
-            return ResponseActionBuilderXml.getFailureResponseActionXML(  );
+            return ResponseActionBuilderXml.getFailureResponseActionXML( );
         }
 
         // Check for illegal character character
-        if ( StringUtil.containsHtmlSpecialCharacters( strDocumentTitle ) ||
-                StringUtil.containsHtmlSpecialCharacters( strDocumentSummary ) )
+        if ( StringUtil.containsHtmlSpecialCharacters( strDocumentTitle ) || StringUtil.containsHtmlSpecialCharacters( strDocumentSummary ) )
         {
-            return ResponseActionBuilderXml.getFailureResponseActionXML(  );
+            return ResponseActionBuilderXml.getFailureResponseActionXML( );
         }
 
-        DocumentType documentType = DocumentTypeHome.findByPrimaryKey( document.getCodeDocumentType(  ) );
-        List<DocumentAttribute> listAttributes = documentType.getAttributes(  );
+        DocumentType documentType = DocumentTypeHome.findByPrimaryKey( document.getCodeDocumentType( ) );
+        List<DocumentAttribute> listAttributes = documentType.getAttributes( );
 
         for ( DocumentAttribute attribute : listAttributes )
         {
@@ -852,14 +859,14 @@ public class DocumentRest
 
             if ( ( dateBegin == null ) )
             {
-                return ResponseActionBuilderXml.getFailureResponseActionXML(  );
+                return ResponseActionBuilderXml.getFailureResponseActionXML( );
             }
 
-            dateValidityBegin = new Timestamp( dateBegin.getTime(  ) );
+            dateValidityBegin = new Timestamp( dateBegin.getTime( ) );
 
             if ( dateValidityBegin.before( new Timestamp( 0 ) ) )
             {
-                return ResponseActionBuilderXml.getFailureResponseActionXML(  );
+                return ResponseActionBuilderXml.getFailureResponseActionXML( );
             }
         }
 
@@ -869,23 +876,23 @@ public class DocumentRest
 
             if ( ( dateEnd == null ) )
             {
-                return ResponseActionBuilderXml.getFailureResponseActionXML(  );
+                return ResponseActionBuilderXml.getFailureResponseActionXML( );
             }
 
-            dateValidityEnd = new Timestamp( dateEnd.getTime(  ) );
+            dateValidityEnd = new Timestamp( dateEnd.getTime( ) );
 
             if ( dateValidityEnd.before( new Timestamp( 0 ) ) )
             {
-                return ResponseActionBuilderXml.getFailureResponseActionXML(  );
+                return ResponseActionBuilderXml.getFailureResponseActionXML( );
             }
         }
 
-        //validate period (dateEnd > dateBegin )
+        // validate period (dateEnd > dateBegin )
         if ( ( dateValidityBegin != null ) && ( dateValidityEnd != null ) )
         {
             if ( dateValidityEnd.before( dateValidityBegin ) )
             {
-                return ResponseActionBuilderXml.getFailureResponseActionXML(  );
+                return ResponseActionBuilderXml.getFailureResponseActionXML( );
             }
         }
 
@@ -897,17 +904,17 @@ public class DocumentRest
         document.setMailingListId( nMailingListId );
         document.setPageTemplateDocumentId( nPageTemplateDocumentId );
 
-        MetadataHandler hMetadata = documentType.metadataHandler(  );
+        MetadataHandler hMetadata = documentType.metadataHandler( );
 
         if ( hMetadata != null )
         {
-            document.setXmlMetadata( hMetadata.getXmlMetadata( multipartRequest.getParameterMap(  ) ) );
+            document.setXmlMetadata( hMetadata.getXmlMetadata( multipartRequest.getParameterMap( ) ) );
         }
 
         document.setAttributes( listAttributes );
 
-        //Categories
-        List<Category> listCategories = new ArrayList<Category>(  );
+        // Categories
+        List<Category> listCategories = new ArrayList<Category>( );
 
         if ( listCategory != null )
         {
@@ -923,109 +930,107 @@ public class DocumentRest
     }
 
     /**
-     * Update the specify attribute with the parameters map     *
-     * @param attribute The {@link DocumentAttribute} to update
-     * @param document The {@link Document}
-     * @param mRequest The multipart http request
+     * Update the specify attribute with the parameters map *
+     * 
+     * @param attribute
+     *            The {@link DocumentAttribute} to update
+     * @param document
+     *            The {@link Document}
+     * @param mRequest
+     *            The multipart http request
      * @return reponse xml
      */
-    private static String setAttribute( DocumentAttribute attribute, Document document,
-        MultipartHttpServletRequest multipartRequest, Locale locale )
+    private static String setAttribute( DocumentAttribute attribute, Document document, MultipartHttpServletRequest multipartRequest, Locale locale )
     {
-        String strParameterStringValue = multipartRequest.getParameter( attribute.getCode(  ) );
-        FileItem fileParameterBinaryValue = multipartRequest.getFile( attribute.getCode(  ) );
-        String strIsUpdatable = multipartRequest.getParameter( DocumentRestConstants.PARAMETER_ATTRIBUTE_UPDATE +
-                attribute.getCode(  ) );
+        String strParameterStringValue = multipartRequest.getParameter( attribute.getCode( ) );
+        FileItem fileParameterBinaryValue = multipartRequest.getFile( attribute.getCode( ) );
+        String strIsUpdatable = multipartRequest.getParameter( DocumentRestConstants.PARAMETER_ATTRIBUTE_UPDATE + attribute.getCode( ) );
         boolean bIsUpdatable = ( ( strIsUpdatable == null ) || strIsUpdatable.equals( "" ) ) ? false : true;
 
-        if ( attribute.isRequired(  ) &&
-                ( StringUtils.isBlank( strParameterStringValue ) && ( fileParameterBinaryValue == null ) ) )
+        if ( attribute.isRequired( ) && ( StringUtils.isBlank( strParameterStringValue ) && ( fileParameterBinaryValue == null ) ) )
         {
-            return ResponseActionBuilderXml.getFailureResponseActionXML(  );
+            return ResponseActionBuilderXml.getFailureResponseActionXML( );
         }
 
         if ( strParameterStringValue != null ) // If the field is a string
         {
             // Check for specific attribute validation
-            AttributeManager manager = AttributeService.getInstance(  ).getManager( attribute.getCodeAttributeType(  ) );
-            String strValidationErrorMessage = manager.validateValue( attribute.getId(  ), strParameterStringValue,
-                    locale );
+            AttributeManager manager = AttributeService.getInstance( ).getManager( attribute.getCodeAttributeType( ) );
+            String strValidationErrorMessage = manager.validateValue( attribute.getId( ), strParameterStringValue, locale );
 
             if ( strValidationErrorMessage != null )
             {
-                //String[] listArguments = { attribute.getName(  ), strValidationErrorMessage };
-                return ResponseActionBuilderXml.getFailureResponseActionXML(  );
+                // String[] listArguments = { attribute.getName( ), strValidationErrorMessage };
+                return ResponseActionBuilderXml.getFailureResponseActionXML( );
             }
 
             attribute.setTextValue( strParameterStringValue );
         }
-        else if ( fileParameterBinaryValue != null ) // If the field is a file
-        {
-            attribute.setBinary( true );
-
-            String strContentType = fileParameterBinaryValue.getContentType(  );
-            byte[] bytes = fileParameterBinaryValue.get(  );
-            String strFileName = fileParameterBinaryValue.getName(  );
-
-            if ( !bIsUpdatable )
+        else
+            if ( fileParameterBinaryValue != null ) // If the field is a file
             {
-                // there is no new value then take the old file value
-                DocumentAttribute oldAttribute = document.getAttribute( attribute.getCode(  ) );
+                attribute.setBinary( true );
 
-                if ( ( oldAttribute != null ) && ( oldAttribute.getBinaryValue(  ) != null ) &&
-                        ( oldAttribute.getBinaryValue(  ).length > 0 ) )
+                String strContentType = fileParameterBinaryValue.getContentType( );
+                byte [ ] bytes = fileParameterBinaryValue.get( );
+                String strFileName = fileParameterBinaryValue.getName( );
+
+                if ( !bIsUpdatable )
                 {
-                    bytes = oldAttribute.getBinaryValue(  );
-                    strContentType = oldAttribute.getValueContentType(  );
-                    strFileName = oldAttribute.getTextValue(  );
+                    // there is no new value then take the old file value
+                    DocumentAttribute oldAttribute = document.getAttribute( attribute.getCode( ) );
+
+                    if ( ( oldAttribute != null ) && ( oldAttribute.getBinaryValue( ) != null ) && ( oldAttribute.getBinaryValue( ).length > 0 ) )
+                    {
+                        bytes = oldAttribute.getBinaryValue( );
+                        strContentType = oldAttribute.getValueContentType( );
+                        strFileName = oldAttribute.getTextValue( );
+                    }
                 }
+
+                // Check for mandatory value
+                if ( attribute.isRequired( ) && ( bytes.length == 0 ) )
+                {
+                    return ResponseActionBuilderXml.getFailureResponseActionXML( );
+                }
+
+                // Check for specific attribute validation
+                AttributeManager manager = AttributeService.getInstance( ).getManager( attribute.getCodeAttributeType( ) );
+                String strValidationErrorMessage = manager.validateValue( attribute.getId( ), strFileName, locale );
+
+                if ( strValidationErrorMessage != null )
+                {
+                    // String[] listArguments = { attribute.getName( ), strValidationErrorMessage };
+                    return ResponseActionBuilderXml.getFailureResponseActionXML( );
+                }
+
+                attribute.setBinaryValue( bytes );
+                attribute.setValueContentType( strContentType );
+                attribute.setTextValue( strFileName );
             }
-
-            // Check for mandatory value
-            if ( attribute.isRequired(  ) && ( bytes.length == 0 ) )
-            {
-                return ResponseActionBuilderXml.getFailureResponseActionXML(  );
-            }
-
-            // Check for specific attribute validation
-            AttributeManager manager = AttributeService.getInstance(  ).getManager( attribute.getCodeAttributeType(  ) );
-            String strValidationErrorMessage = manager.validateValue( attribute.getId(  ), strFileName, locale );
-
-            if ( strValidationErrorMessage != null )
-            {
-                //String[] listArguments = { attribute.getName(  ), strValidationErrorMessage };
-                return ResponseActionBuilderXml.getFailureResponseActionXML(  );
-            }
-
-            attribute.setBinaryValue( bytes );
-            attribute.setValueContentType( strContentType );
-            attribute.setTextValue( strFileName );
-        }
 
         return null;
     }
 
     /**
      * Modify document
-     * @param request request
+     * 
+     * @param request
+     *            request
      * @return response xml
      */
     @POST
     @Path( DocumentRestConstants.PATH_MODIFY_DOCUMENT )
     @Consumes( MediaType.MULTIPART_FORM_DATA )
-    @Produces( {MediaType.TEXT_HTML,
-        MediaType.TEXT_XML,
-        MediaType.APPLICATION_XML,
-        MediaType.APPLICATION_JSON
+    @Produces( {
+            MediaType.TEXT_HTML, MediaType.TEXT_XML, MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON
     } )
-    public String doModifyDocument( @Context
-    HttpServletRequest request )
+    public String doModifyDocument( @Context HttpServletRequest request )
     {
         String strResponseXml = StringUtils.EMPTY;
-        int nSizeThreshold = AppPropertiesService.getPropertyInt( DocumentRestConstants.PROPERTY_MULTIPART_SIZE_THRESHOLD,
-                -1 );
-        boolean bActivateNormalizeFileName = Boolean.getBoolean( AppPropertiesService.getProperty( 
-                    DocumentRestConstants.PROPERTY_MULTIPART_NORMALIZE_FILE_NAME ) );
+        int nSizeThreshold = AppPropertiesService.getPropertyInt( DocumentRestConstants.PROPERTY_MULTIPART_SIZE_THRESHOLD, -1 );
+        boolean bActivateNormalizeFileName = Boolean.getBoolean( AppPropertiesService
+                .getProperty( DocumentRestConstants.PROPERTY_MULTIPART_NORMALIZE_FILE_NAME ) );
         String strRequestSizeMax = AppPropertiesService.getProperty( DocumentRestConstants.PROPERTY_MULTIPART_REQUEST_SIZE_MAX );
         long nRequestSizeMax = 0;
 
@@ -1036,21 +1041,20 @@ public class DocumentRest
 
         try
         {
-            MultipartHttpServletRequest multipartRequest = MultipartUtil.convert( nSizeThreshold, nRequestSizeMax,
-                    bActivateNormalizeFileName, request );
+            MultipartHttpServletRequest multipartRequest = MultipartUtil.convert( nSizeThreshold, nRequestSizeMax, bActivateNormalizeFileName, request );
 
             if ( multipartRequest != null )
             {
                 strResponseXml = modifyDocument( multipartRequest );
             }
         }
-        catch ( SizeLimitExceededException e )
+        catch( SizeLimitExceededException e )
         {
-            return ResponseActionBuilderXml.getFailureResponseActionXML(  );
+            return ResponseActionBuilderXml.getFailureResponseActionXML( );
         }
-        catch ( FileUploadException e )
+        catch( FileUploadException e )
         {
-            return ResponseActionBuilderXml.getFailureResponseActionXML(  );
+            return ResponseActionBuilderXml.getFailureResponseActionXML( );
         }
 
         return strResponseXml;
@@ -1058,10 +1062,10 @@ public class DocumentRest
 
     private String modifyDocument( MultipartHttpServletRequest multipartRequest )
     {
-        if ( StringUtils.isNotBlank( multipartRequest.getParameter( DocumentRestConstants.PARAMETER_ID_USER ) ) &&
-                StringUtils.isNumeric( multipartRequest.getParameter( DocumentRestConstants.PARAMETER_ID_USER ) ) )
+        if ( StringUtils.isNotBlank( multipartRequest.getParameter( DocumentRestConstants.PARAMETER_ID_USER ) )
+                && StringUtils.isNumeric( multipartRequest.getParameter( DocumentRestConstants.PARAMETER_ID_USER ) ) )
         {
-            //Create AdminUser
+            // Create AdminUser
             int nIdUser = Integer.parseInt( multipartRequest.getParameter( DocumentRestConstants.PARAMETER_ID_USER ) );
             AdminUser user = AdminUserHome.findByPrimaryKey( nIdUser );
 
@@ -1074,14 +1078,13 @@ public class DocumentRest
 
                 Document document = DocumentHome.findByPrimaryKeyWithoutBinaries( Integer.parseInt( strDocumentId ) );
 
-                if ( !DocumentService.getInstance(  )
-                                         .isAuthorizedAdminDocument( document.getSpaceId(  ),
-                            document.getCodeDocumentType(  ), DocumentTypeResourceIdService.PERMISSION_MODIFY, user ) )
+                if ( !DocumentService.getInstance( ).isAuthorizedAdminDocument( document.getSpaceId( ), document.getCodeDocumentType( ),
+                        DocumentTypeResourceIdService.PERMISSION_MODIFY, user ) )
                 {
-                    return ResponseActionBuilderXml.getFailureResponseActionXML(  );
+                    return ResponseActionBuilderXml.getFailureResponseActionXML( );
                 }
 
-                String strError = getDocumentData( multipartRequest, document, multipartRequest.getLocale(  ) );
+                String strError = getDocumentData( multipartRequest, document, multipartRequest.getLocale( ) );
 
                 if ( strError != null )
                 {
@@ -1090,11 +1093,11 @@ public class DocumentRest
 
                 try
                 {
-                    DocumentService.getInstance(  ).modifyDocument( document, user );
+                    DocumentService.getInstance( ).modifyDocument( document, user );
                 }
-                catch ( DocumentException e )
+                catch( DocumentException e )
                 {
-                    return ResponseActionBuilderXml.getFailureResponseActionXML(  );
+                    return ResponseActionBuilderXml.getFailureResponseActionXML( );
                 }
 
                 String strStateId = multipartRequest.getParameter( DocumentRestConstants.PARAMETER_STATE_ID );
@@ -1105,22 +1108,22 @@ public class DocumentRest
 
                     try
                     {
-                        DocumentService.getInstance(  ).changeDocumentState( document, user, nStateId );
+                        DocumentService.getInstance( ).changeDocumentState( document, user, nStateId );
                     }
-                    catch ( DocumentException e )
+                    catch( DocumentException e )
                     {
-                        return ResponseActionBuilderXml.getFailureResponseActionXML(  );
+                        return ResponseActionBuilderXml.getFailureResponseActionXML( );
                     }
                 }
 
-                return ResponseActionBuilderXml.getSuccessResponseActionXML(  );
+                return ResponseActionBuilderXml.getSuccessResponseActionXML( );
             }
             else
             {
-                return ResponseActionBuilderXml.getFailureResponseActionXML(  );
+                return ResponseActionBuilderXml.getFailureResponseActionXML( );
             }
         }
 
-        return ResponseActionBuilderXml.getFailureResponseActionXML(  );
+        return ResponseActionBuilderXml.getFailureResponseActionXML( );
     }
 }

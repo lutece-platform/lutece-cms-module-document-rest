@@ -13,13 +13,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 /**
  * DocumentPublicationFormatterXml
  */
 public class DocumentPublicationFormatterXml implements IFormatter<DocumentPublication>
 {
-	/**
+    /**
      * {@inheritDoc}
      */
     public String format( DocumentPublication resource )
@@ -32,7 +31,7 @@ public class DocumentPublicationFormatterXml implements IFormatter<DocumentPubli
 
         XmlUtil.endElement( sbXml, DocumentRestConstants.TAG_RESPONSE );
 
-        return sbXml.toString(  );
+        return sbXml.toString( );
     }
 
     /**
@@ -53,23 +52,25 @@ public class DocumentPublicationFormatterXml implements IFormatter<DocumentPubli
         XmlUtil.endElement( sbXml, DocumentRestConstants.TAG_DOCUMENTS_PUBLICATION );
         XmlUtil.endElement( sbXml, DocumentRestConstants.TAG_RESPONSE );
 
-        return sbXml.toString(  );
+        return sbXml.toString( );
     }
 
     /**
      * Format DocumentPublication
-     * @param sbXml xml
-     * @param doc document
+     * 
+     * @param sbXml
+     *            xml
+     * @param doc
+     *            document
      */
     private static void formatDocumentPublication( StringBuffer sbXml, DocumentPublication documentPublication )
     {
         if ( documentPublication != null )
         {
-            Map<String, String> mapAttributsDocumentPublication = new HashMap<String, String>(  );
-            mapAttributsDocumentPublication.put( DocumentRestConstants.ATTRIBUTS_PORTLET_ID , String.valueOf( documentPublication.getPortletId(  ) ) );
-            mapAttributsDocumentPublication.put( DocumentRestConstants.ATTRIBUTS_STATUS, String.valueOf( documentPublication.getStatus(  ) ) );
-            XmlUtil.addEmptyElement( sbXml, DocumentRestConstants.TAG_DOCUMENT_PUBLICATION,
-                mapAttributsDocumentPublication );
+            Map<String, String> mapAttributsDocumentPublication = new HashMap<String, String>( );
+            mapAttributsDocumentPublication.put( DocumentRestConstants.ATTRIBUTS_PORTLET_ID, String.valueOf( documentPublication.getPortletId( ) ) );
+            mapAttributsDocumentPublication.put( DocumentRestConstants.ATTRIBUTS_STATUS, String.valueOf( documentPublication.getStatus( ) ) );
+            XmlUtil.addEmptyElement( sbXml, DocumentRestConstants.TAG_DOCUMENT_PUBLICATION, mapAttributsDocumentPublication );
         }
     }
 

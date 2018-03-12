@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2014, Mairie de Paris
+ * Copyright (c) 2002-2018, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -45,10 +45,10 @@ import fr.paris.lutece.util.xml.XmlUtil;
 
 public class AddHeaderXml
 {
-	/**
-	 * Constructor
-	 */	
-    AddHeaderXml(  )
+    /**
+     * Constructor
+     */
+    AddHeaderXml( )
     {
     }
 
@@ -60,11 +60,11 @@ public class AddHeaderXml
     public static String addHeaderXml( String strXml )
     {
         StringBuffer sbXml = new StringBuffer( AppPropertiesService.getProperty( DocumentRestConstants.PROPERTIES_XML_HEADER ) );
-        StringBuffer sbResponseXml = new StringBuffer(  );
+        StringBuffer sbResponseXml = new StringBuffer( );
         XmlUtil.addElement( sbResponseXml, DocumentRestConstants.TAG_STATUS, DocumentRestConstants.STATUS_SUCCESS );
         sbResponseXml.append( strXml );
-        XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_RESPONSE, sbResponseXml.toString(  ) );
+        XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_RESPONSE, sbResponseXml.toString( ) );
 
-        return sbXml.toString(  );
+        return sbXml.toString( );
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2014, Mairie de Paris
+ * Copyright (c) 2002-2018, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -43,19 +43,17 @@ import org.apache.commons.lang.StringUtils;
 
 import java.util.List;
 
-
 /**
  * TypeFormatterXml
  */
 public class TypeFormatterXml implements IFormatter<DocumentType>
 {
     /**
-    * {@inheritDoc}
-    */
+     * {@inheritDoc}
+     */
     public String format( DocumentType resource )
     {
-        StringBuffer sbXml = new StringBuffer( AppPropertiesService.getProperty( 
-                    DocumentRestConstants.PROPERTIES_XML_HEADER ) );
+        StringBuffer sbXml = new StringBuffer( AppPropertiesService.getProperty( DocumentRestConstants.PROPERTIES_XML_HEADER ) );
         XmlUtil.beginElement( sbXml, DocumentRestConstants.TAG_RESPONSE );
         XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_STATUS, DocumentRestConstants.STATUS_SUCCESS );
 
@@ -63,18 +61,20 @@ public class TypeFormatterXml implements IFormatter<DocumentType>
 
         XmlUtil.endElement( sbXml, DocumentRestConstants.TAG_RESPONSE );
 
-        return sbXml.toString(  );
+        return sbXml.toString( );
     }
 
     /**
-         * Format DocumentType
-         * @param listResources resources list
-         * @param referenceItem referenceItem
-         */
+     * Format DocumentType
+     * 
+     * @param listResources
+     *            resources list
+     * @param referenceItem
+     *            referenceItem
+     */
     public String format( List<DocumentType> listResources )
     {
-        StringBuffer sbXml = new StringBuffer( AppPropertiesService.getProperty( 
-                    DocumentRestConstants.PROPERTIES_XML_HEADER ) );
+        StringBuffer sbXml = new StringBuffer( AppPropertiesService.getProperty( DocumentRestConstants.PROPERTIES_XML_HEADER ) );
         XmlUtil.beginElement( sbXml, DocumentRestConstants.TAG_RESPONSE );
         XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_STATUS, DocumentRestConstants.STATUS_SUCCESS );
         XmlUtil.beginElement( sbXml, DocumentRestConstants.TAG_DOCUMENTS );
@@ -87,7 +87,7 @@ public class TypeFormatterXml implements IFormatter<DocumentType>
         XmlUtil.beginElement( sbXml, DocumentRestConstants.TAG_DOCUMENTS );
         XmlUtil.endElement( sbXml, DocumentRestConstants.TAG_RESPONSE );
 
-        return sbXml.toString(  );
+        return sbXml.toString( );
     }
 
     /**
@@ -98,31 +98,28 @@ public class TypeFormatterXml implements IFormatter<DocumentType>
         if ( type != null )
         {
             XmlUtil.beginElement( sbXml, DocumentRestConstants.TAG_DOCUMENT_TYPE );
-            XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_CODE_DOCUMENT_TYPE, type.getCode(  ) );
+            XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_CODE_DOCUMENT_TYPE, type.getCode( ) );
 
-            if ( StringUtils.isNotBlank( type.getName(  ) ) )
+            if ( StringUtils.isNotBlank( type.getName( ) ) )
             {
-                XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_DOCUMENT_TYPE_NAME, type.getName(  ) );
+                XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_DOCUMENT_TYPE_NAME, type.getName( ) );
             }
 
-            if ( StringUtils.isNotBlank( type.getDescription(  ) ) )
+            if ( StringUtils.isNotBlank( type.getDescription( ) ) )
             {
-                XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_DOCUMENT_TYPE_DESCRIPTION, type.getDescription(  ) );
+                XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_DOCUMENT_TYPE_DESCRIPTION, type.getDescription( ) );
             }
 
-            XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_DOCUMENT_TYPE_THUMBNAIL_ATTRIBUTE_ID,
-                type.getThumbnailAttributeId(  ) );
+            XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_DOCUMENT_TYPE_THUMBNAIL_ATTRIBUTE_ID, type.getThumbnailAttributeId( ) );
 
-            if ( StringUtils.isNotBlank( type.getDefaultThumbnailUrl(  ) ) )
+            if ( StringUtils.isNotBlank( type.getDefaultThumbnailUrl( ) ) )
             {
-                XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_DOCUMENT_TYPE_DEFAULT_THUMBNAIL_URL,
-                    type.getDefaultThumbnailUrl(  ) );
+                XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_DOCUMENT_TYPE_DEFAULT_THUMBNAIL_URL, type.getDefaultThumbnailUrl( ) );
             }
 
-            if ( StringUtils.isNotBlank( type.getMetadataHandler(  ) ) )
+            if ( StringUtils.isNotBlank( type.getMetadataHandler( ) ) )
             {
-                XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_DOCUMENT_TYPE_METADATA_HANDLER,
-                    type.getMetadataHandler(  ) );
+                XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_DOCUMENT_TYPE_METADATA_HANDLER, type.getMetadataHandler( ) );
             }
 
             XmlUtil.endElement( sbXml, DocumentRestConstants.TAG_DOCUMENT_TYPE );

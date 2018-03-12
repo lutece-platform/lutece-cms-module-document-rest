@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2014, Mairie de Paris
+ * Copyright (c) 2002-2018, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -48,7 +48,7 @@ import java.util.Map;
  */
 public class ReferenceItemFormatterXml implements IFormatter<ReferenceItem>
 {
-	/**
+    /**
      * {@inheritDoc}
      */
     public String format( ReferenceItem resource )
@@ -61,7 +61,7 @@ public class ReferenceItemFormatterXml implements IFormatter<ReferenceItem>
 
         XmlUtil.endElement( sbXml, DocumentRestConstants.TAG_RESPONSE );
 
-        return sbXml.toString(  );
+        return sbXml.toString( );
     }
 
     /**
@@ -82,21 +82,24 @@ public class ReferenceItemFormatterXml implements IFormatter<ReferenceItem>
         XmlUtil.endElement( sbXml, DocumentRestConstants.TAG_REF_ITEMS );
         XmlUtil.endElement( sbXml, DocumentRestConstants.TAG_RESPONSE );
 
-        return sbXml.toString(  );
+        return sbXml.toString( );
     }
-    
-	/**
-	 * Format formatReferenceItem
-	 * @param sbXml xml
-	 * @param referenceItem referenceItem
-	 */
+
+    /**
+     * Format formatReferenceItem
+     * 
+     * @param sbXml
+     *            xml
+     * @param referenceItem
+     *            referenceItem
+     */
     private static void formatReferenceItem( StringBuffer sbXml, ReferenceItem referenceItem )
     {
         if ( referenceItem != null )
         {
-            Map<String, String> mapAttributsReferenceItem = new HashMap<String, String>(  );
-            mapAttributsReferenceItem.put( DocumentRestConstants.ATTRIBUTS_NAME, referenceItem.getName(  ) );
-            mapAttributsReferenceItem.put( DocumentRestConstants.ATTRIBUTS_CODE, referenceItem.getCode(  ) );
+            Map<String, String> mapAttributsReferenceItem = new HashMap<String, String>( );
+            mapAttributsReferenceItem.put( DocumentRestConstants.ATTRIBUTS_NAME, referenceItem.getName( ) );
+            mapAttributsReferenceItem.put( DocumentRestConstants.ATTRIBUTS_CODE, referenceItem.getCode( ) );
             XmlUtil.addEmptyElement( sbXml, DocumentRestConstants.TAG_REF_ITEM, mapAttributsReferenceItem );
         }
     }

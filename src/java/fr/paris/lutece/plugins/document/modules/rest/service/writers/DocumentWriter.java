@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2014, Mairie de Paris
+ * Copyright (c) 2002-2018, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -52,15 +52,15 @@ import javax.ws.rs.ext.Provider;
  *
  */
 @Provider
-@Produces( {MediaType.APPLICATION_XML,
-    MediaType.APPLICATION_JSON
+@Produces( {
+        MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON
 } )
 public class DocumentWriter extends AbstractWriter<Document>
 {
-	/**
+    /**
      * {@inheritDoc}
      */
-    public boolean isWriteable( Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType )
+    public boolean isWriteable( Class<?> type, Type genericType, Annotation [ ] annotations, MediaType mediaType )
     {
         // Ensure that we're handling only List<Directory> objects.
         boolean isWritable = false;
@@ -73,8 +73,8 @@ public class DocumentWriter extends AbstractWriter<Document>
         if ( List.class.isAssignableFrom( type ) && genericType instanceof ParameterizedType )
         {
             ParameterizedType parameterizedType = (ParameterizedType) genericType;
-            Type[] actualTypeArgs = ( parameterizedType.getActualTypeArguments(  ) );
-            isWritable = ( ( actualTypeArgs.length == 1 ) && actualTypeArgs[0].equals( Document.class ) );
+            Type [ ] actualTypeArgs = ( parameterizedType.getActualTypeArguments( ) );
+            isWritable = ( ( actualTypeArgs.length == 1 ) && actualTypeArgs [0].equals( Document.class ) );
         }
 
         return isWritable;

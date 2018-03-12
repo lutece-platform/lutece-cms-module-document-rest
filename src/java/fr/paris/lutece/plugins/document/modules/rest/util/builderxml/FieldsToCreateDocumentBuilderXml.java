@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2014, Mairie de Paris
+ * Copyright (c) 2002-2018, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -55,17 +55,19 @@ import fr.paris.lutece.util.xml.XmlUtil;
  */
 public class FieldsToCreateDocumentBuilderXml
 {
-	
-	/**
-	 * Constructor
-	 */
-    FieldsToCreateDocumentBuilderXml(  )
+
+    /**
+     * Constructor
+     */
+    FieldsToCreateDocumentBuilderXml( )
     {
     }
 
     /**
      * Build the xml
-     * @param strCodeDocumentType code type of document
+     * 
+     * @param strCodeDocumentType
+     *            code type of document
      * @return the xml response
      */
     public static String buildXml( String strCodeDocumentType )
@@ -80,32 +82,34 @@ public class FieldsToCreateDocumentBuilderXml
         mainFieldsBuildXml( sbXml );
         XmlUtil.endElement( sbXml, DocumentRestConstants.TAG_CREATE_DOCUMENT_FIELDS_FORM_MAINFIELDS );
 
-        if ( documentType.getMetadataHandler(  ).equals( "dublincore" ) )
+        if ( documentType.getMetadataHandler( ).equals( "dublincore" ) )
         {
             XmlUtil.beginElement( sbXml, DocumentRestConstants.TAG_CREATE_DOCUMENT_FIELDS_FORM_DUBLINCORE_FIELDS );
             dublinCodeMetaDatasFieldsBuildXml( sbXml );
             XmlUtil.endElement( sbXml, DocumentRestConstants.TAG_CREATE_DOCUMENT_FIELDS_FORM_DUBLINCORE_FIELDS );
         }
 
-        if ( ( documentType.getAttributes(  ) != null ) && !documentType.getAttributes(  ).isEmpty(  ) )
+        if ( ( documentType.getAttributes( ) != null ) && !documentType.getAttributes( ).isEmpty( ) )
         {
             XmlUtil.beginElement( sbXml, DocumentRestConstants.TAG_CREATE_DOCUMENT_FIELDS_FORM_ATTRIBUTS_FIELDS );
-            documentAttributsFieldsBuildXml( documentType.getAttributes(  ), sbXml );
+            documentAttributsFieldsBuildXml( documentType.getAttributes( ), sbXml );
             XmlUtil.endElement( sbXml, DocumentRestConstants.TAG_CREATE_DOCUMENT_FIELDS_FORM_ATTRIBUTS_FIELDS );
         }
 
         XmlUtil.endElement( sbXml, DocumentRestConstants.TAG_CREATE_DOCUMENT_FIELDS_FORM );
 
-        return sbXml.toString(  );
+        return sbXml.toString( );
     }
 
     /**
      * Build the xml of main fiels
-     * @param sbXml xml
+     * 
+     * @param sbXml
+     *            xml
      */
     private static void mainFieldsBuildXml( StringBuffer sbXml )
     {
-        Map<String, String> mapAttributsList = new HashMap<String, String>(  );
+        Map<String, String> mapAttributsList = new HashMap<String, String>( );
         mapAttributsList.put( DocumentRestConstants.ATTRIBUTS_NAME, DocumentRestConstants.PARAMETER_DOCUMENT_TITLE );
         mapAttributsList.put( DocumentRestConstants.ATTRIBUTS_TYPE, "text" );
         mapAttributsList.put( DocumentRestConstants.ATTRIBUTS_MAXLENGTH, "255" );
@@ -113,7 +117,7 @@ public class FieldsToCreateDocumentBuilderXml
         mapAttributsList.put( DocumentRestConstants.ATTRIBUTS_ISREQUIRED, "1" );
         XmlUtil.addEmptyElement( sbXml, DocumentRestConstants.TAG_CREATE_DOCUMENT_FIELDS_TEXT, mapAttributsList );
 
-        mapAttributsList = new HashMap<String, String>(  );
+        mapAttributsList = new HashMap<String, String>( );
         mapAttributsList.put( DocumentRestConstants.ATTRIBUTS_NAME, DocumentRestConstants.PARAMETER_DOCUMENT_SUMMARY );
         mapAttributsList.put( DocumentRestConstants.ATTRIBUTS_TYPE, "text" );
         mapAttributsList.put( DocumentRestConstants.ATTRIBUTS_ROWS, "2" );
@@ -121,7 +125,7 @@ public class FieldsToCreateDocumentBuilderXml
         mapAttributsList.put( DocumentRestConstants.ATTRIBUTS_ISREQUIRED, "1" );
         XmlUtil.addEmptyElement( sbXml, DocumentRestConstants.TAG_CREATE_DOCUMENT_FIELDS_TEXTAREA, mapAttributsList );
 
-        mapAttributsList = new HashMap<String, String>(  );
+        mapAttributsList = new HashMap<String, String>( );
         mapAttributsList.put( DocumentRestConstants.ATTRIBUTS_NAME, DocumentRestConstants.PARAMETER_DOCUMENT_COMMENT );
         mapAttributsList.put( DocumentRestConstants.ATTRIBUTS_TYPE, "text" );
         mapAttributsList.put( DocumentRestConstants.ATTRIBUTS_ROWS, "2" );
@@ -129,7 +133,7 @@ public class FieldsToCreateDocumentBuilderXml
         mapAttributsList.put( DocumentRestConstants.ATTRIBUTS_ISREQUIRED, "0" );
         XmlUtil.addEmptyElement( sbXml, DocumentRestConstants.TAG_CREATE_DOCUMENT_FIELDS_TEXTAREA, mapAttributsList );
 
-        mapAttributsList = new HashMap<String, String>(  );
+        mapAttributsList = new HashMap<String, String>( );
         mapAttributsList.put( DocumentRestConstants.ATTRIBUTS_NAME, DocumentRestConstants.PARAMETER_PAGE_TEMPLATE_DOCUMENT_ID );
         mapAttributsList.put( DocumentRestConstants.ATTRIBUTS_TYPE, "radio" );
         mapAttributsList.put( DocumentRestConstants.ATTRIBUTS_ROWS, "2" );
@@ -140,28 +144,28 @@ public class FieldsToCreateDocumentBuilderXml
         XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_CREATE_DOCUMENT_FIELDS_RADIO_VALUE, "1" );
         XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_CREATE_DOCUMENT_FIELDS_RADIO_VALUE, "2" );
 
-        mapAttributsList = new HashMap<String, String>(  );
+        mapAttributsList = new HashMap<String, String>( );
         mapAttributsList.put( DocumentRestConstants.ATTRIBUTS_NAME, DocumentRestConstants.PARAMETER_VALIDITY_BEGIN );
         mapAttributsList.put( DocumentRestConstants.ATTRIBUTS_TYPE, "text" );
         mapAttributsList.put( DocumentRestConstants.ATTRIBUTS_SITE, "10" );
         mapAttributsList.put( DocumentRestConstants.ATTRIBUTS_ISREQUIRED, "0" );
         XmlUtil.addEmptyElement( sbXml, DocumentRestConstants.TAG_CREATE_DOCUMENT_FIELDS_TEXT, mapAttributsList );
 
-        mapAttributsList = new HashMap<String, String>(  );
+        mapAttributsList = new HashMap<String, String>( );
         mapAttributsList.put( DocumentRestConstants.ATTRIBUTS_NAME, DocumentRestConstants.PARAMETER_VALIDITY_END );
         mapAttributsList.put( DocumentRestConstants.ATTRIBUTS_TYPE, "text" );
         mapAttributsList.put( DocumentRestConstants.ATTRIBUTS_SITE, "10" );
         mapAttributsList.put( DocumentRestConstants.ATTRIBUTS_ISREQUIRED, "0" );
         XmlUtil.addEmptyElement( sbXml, DocumentRestConstants.TAG_CREATE_DOCUMENT_FIELDS_TEXT, mapAttributsList );
 
-        mapAttributsList = new HashMap<String, String>(  );
+        mapAttributsList = new HashMap<String, String>( );
         mapAttributsList.put( DocumentRestConstants.ATTRIBUTS_NAME, DocumentRestConstants.PARAMETER_ACCEPT_SITE_COMMENTS );
         mapAttributsList.put( DocumentRestConstants.ATTRIBUTS_TYPE, "checkbox" );
         mapAttributsList.put( DocumentRestConstants.ATTRIBUTS_VALUE, "1" );
         mapAttributsList.put( DocumentRestConstants.ATTRIBUTS_ISREQUIRED, "0" );
         XmlUtil.addEmptyElement( sbXml, DocumentRestConstants.TAG_CREATE_DOCUMENT_FIELDS_CHECKBOX, mapAttributsList );
 
-        mapAttributsList = new HashMap<String, String>(  );
+        mapAttributsList = new HashMap<String, String>( );
         mapAttributsList.put( DocumentRestConstants.ATTRIBUTS_NAME, DocumentRestConstants.PARAMETER_IS_MODERATED_COMMENT );
         mapAttributsList.put( DocumentRestConstants.ATTRIBUTS_TYPE, "checkbox" );
         mapAttributsList.put( DocumentRestConstants.ATTRIBUTS_VALUE, "1" );
@@ -169,53 +173,56 @@ public class FieldsToCreateDocumentBuilderXml
         XmlUtil.addEmptyElement( sbXml, DocumentRestConstants.TAG_CREATE_DOCUMENT_FIELDS_CHECKBOX, mapAttributsList );
     }
 
-	/**
-	 * Build the xml of dublin code meta datas
-	 * @param sbXml xml
-	 */
+    /**
+     * Build the xml of dublin code meta datas
+     * 
+     * @param sbXml
+     *            xml
+     */
     private static void dublinCodeMetaDatasFieldsBuildXml( StringBuffer sbXml )
     {
         XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_CREATE_DOCUMENT_FIELDS_TEXT, "",
-            getMapAttributDublinCodeMetaDatasFields( DocumentRestConstants.PARAMETER_DUBLIN_CORE_META_DATA_TITLE ) );
+                getMapAttributDublinCodeMetaDatasFields( DocumentRestConstants.PARAMETER_DUBLIN_CORE_META_DATA_TITLE ) );
         XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_CREATE_DOCUMENT_FIELDS_TEXT, "Mairie de Paris",
-            getMapAttributDublinCodeMetaDatasFields( DocumentRestConstants.PARAMETER_DUBLIN_CORE_META_DATA_CREATOR ) );
+                getMapAttributDublinCodeMetaDatasFields( DocumentRestConstants.PARAMETER_DUBLIN_CORE_META_DATA_CREATOR ) );
         XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_CREATE_DOCUMENT_FIELDS_TEXT, "lutece;portal;xml;java",
-            getMapAttributDublinCodeMetaDatasFields( DocumentRestConstants.PARAMETER_DUBLIN_CORE_META_DATA_SUBJECT ) );
+                getMapAttributDublinCodeMetaDatasFields( DocumentRestConstants.PARAMETER_DUBLIN_CORE_META_DATA_SUBJECT ) );
         XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_CREATE_DOCUMENT_FIELDS_TEXT, "",
-            getMapAttributDublinCodeMetaDatasFields( DocumentRestConstants.PARAMETER_DUBLIN_CORE_META_DATA_DESCRIPTION ) );
+                getMapAttributDublinCodeMetaDatasFields( DocumentRestConstants.PARAMETER_DUBLIN_CORE_META_DATA_DESCRIPTION ) );
         XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_CREATE_DOCUMENT_FIELDS_TEXT, "Mairie de Paris",
-            getMapAttributDublinCodeMetaDatasFields( DocumentRestConstants.PARAMETER_DUBLIN_CORE_META_DATA_PUBLISHER ) );
+                getMapAttributDublinCodeMetaDatasFields( DocumentRestConstants.PARAMETER_DUBLIN_CORE_META_DATA_PUBLISHER ) );
         XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_CREATE_DOCUMENT_FIELDS_TEXT, "",
-            getMapAttributDublinCodeMetaDatasFields( DocumentRestConstants.PARAMETER_DUBLIN_CORE_META_DATA_CONTRIBUTOR ) );
+                getMapAttributDublinCodeMetaDatasFields( DocumentRestConstants.PARAMETER_DUBLIN_CORE_META_DATA_CONTRIBUTOR ) );
         XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_CREATE_DOCUMENT_FIELDS_TEXT, "",
-            getMapAttributDublinCodeMetaDatasFields( DocumentRestConstants.PARAMETER_DUBLIN_CORE_META_DATA_DATE ) );
+                getMapAttributDublinCodeMetaDatasFields( DocumentRestConstants.PARAMETER_DUBLIN_CORE_META_DATA_DATE ) );
         XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_CREATE_DOCUMENT_FIELDS_TEXT, "",
-            getMapAttributDublinCodeMetaDatasFields( DocumentRestConstants.PARAMETER_DUBLIN_CORE_META_DATA_TYPE ) );
+                getMapAttributDublinCodeMetaDatasFields( DocumentRestConstants.PARAMETER_DUBLIN_CORE_META_DATA_TYPE ) );
         XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_CREATE_DOCUMENT_FIELDS_TEXT, "",
-            getMapAttributDublinCodeMetaDatasFields( DocumentRestConstants.PARAMETER_DUBLIN_CORE_META_DATA_FORMAT ) );
+                getMapAttributDublinCodeMetaDatasFields( DocumentRestConstants.PARAMETER_DUBLIN_CORE_META_DATA_FORMAT ) );
         XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_CREATE_DOCUMENT_FIELDS_TEXT, "",
-            getMapAttributDublinCodeMetaDatasFields( DocumentRestConstants.PARAMETER_DUBLIN_CORE_META_DATA_IDENTIFIER ) );
+                getMapAttributDublinCodeMetaDatasFields( DocumentRestConstants.PARAMETER_DUBLIN_CORE_META_DATA_IDENTIFIER ) );
         XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_CREATE_DOCUMENT_FIELDS_TEXT, "",
-            getMapAttributDublinCodeMetaDatasFields( DocumentRestConstants.PARAMETER_DUBLIN_CORE_META_DATA_SOURCE ) );
+                getMapAttributDublinCodeMetaDatasFields( DocumentRestConstants.PARAMETER_DUBLIN_CORE_META_DATA_SOURCE ) );
         XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_CREATE_DOCUMENT_FIELDS_TEXT, "fr",
-            getMapAttributDublinCodeMetaDatasFields( DocumentRestConstants.PARAMETER_DUBLIN_CORE_META_DATA_LANGUAGE ) );
+                getMapAttributDublinCodeMetaDatasFields( DocumentRestConstants.PARAMETER_DUBLIN_CORE_META_DATA_LANGUAGE ) );
         XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_CREATE_DOCUMENT_FIELDS_TEXT, "",
-            getMapAttributDublinCodeMetaDatasFields( DocumentRestConstants.PARAMETER_DUBLIN_CORE_META_DATA_RELATION ) );
+                getMapAttributDublinCodeMetaDatasFields( DocumentRestConstants.PARAMETER_DUBLIN_CORE_META_DATA_RELATION ) );
         XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_CREATE_DOCUMENT_FIELDS_TEXT, "",
-            getMapAttributDublinCodeMetaDatasFields( DocumentRestConstants.PARAMETER_DUBLIN_CORE_META_DATA_COVERAGE ) );
-        XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_CREATE_DOCUMENT_FIELDS_TEXT,
-            "Copyrights (c) Mairie de Paris",
-            getMapAttributDublinCodeMetaDatasFields( DocumentRestConstants.PARAMETER_DUBLIN_CORE_META_DATA_RIGHTS ) );
+                getMapAttributDublinCodeMetaDatasFields( DocumentRestConstants.PARAMETER_DUBLIN_CORE_META_DATA_COVERAGE ) );
+        XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_CREATE_DOCUMENT_FIELDS_TEXT, "Copyrights (c) Mairie de Paris",
+                getMapAttributDublinCodeMetaDatasFields( DocumentRestConstants.PARAMETER_DUBLIN_CORE_META_DATA_RIGHTS ) );
     }
 
     /**
      * Add attribut for dublin code meta datas
-     * @param strName name of parameters
+     * 
+     * @param strName
+     *            name of parameters
      * @return mapAttributsList map of attributs
      */
     private static Map<String, String> getMapAttributDublinCodeMetaDatasFields( String strName )
     {
-        Map<String, String> mapAttributsList = new HashMap<String, String>(  );
+        Map<String, String> mapAttributsList = new HashMap<String, String>( );
         mapAttributsList.put( DocumentRestConstants.ATTRIBUTS_TYPE, "text" );
         mapAttributsList.put( DocumentRestConstants.ATTRIBUTS_SITE, "50" );
         mapAttributsList.put( DocumentRestConstants.ATTRIBUTS_NAME, strName );
@@ -225,50 +232,46 @@ public class FieldsToCreateDocumentBuilderXml
 
     /**
      * Build the xml of document attributs fields
-     * @param listDocumentAttribute list of attributs
-     * @param sbXml xml
+     * 
+     * @param listDocumentAttribute
+     *            list of attributs
+     * @param sbXml
+     *            xml
      */
-    private static void documentAttributsFieldsBuildXml( List<DocumentAttribute> listDocumentAttribute,
-        StringBuffer sbXml )
+    private static void documentAttributsFieldsBuildXml( List<DocumentAttribute> listDocumentAttribute, StringBuffer sbXml )
     {
         for ( DocumentAttribute documentAttribute : listDocumentAttribute )
         {
-            Map<String, String> mapAttributsList = new HashMap<String, String>(  );
-            mapAttributsList.put( DocumentRestConstants.ATTRIBUTS_NAME, documentAttribute.getName(  ) );
-            mapAttributsList.put( DocumentRestConstants.ATTRIBUTS_TYPE, documentAttribute.getCodeAttributeType(  ) );
-            mapAttributsList.put( DocumentRestConstants.ATTRIBUTS_CODE, documentAttribute.getCode(  ) );
-            if ( documentAttribute.isRequired() )
+            Map<String, String> mapAttributsList = new HashMap<String, String>( );
+            mapAttributsList.put( DocumentRestConstants.ATTRIBUTS_NAME, documentAttribute.getName( ) );
+            mapAttributsList.put( DocumentRestConstants.ATTRIBUTS_TYPE, documentAttribute.getCodeAttributeType( ) );
+            mapAttributsList.put( DocumentRestConstants.ATTRIBUTS_CODE, documentAttribute.getCode( ) );
+            if ( documentAttribute.isRequired( ) )
             {
-            	mapAttributsList.put( DocumentRestConstants.ATTRIBUTS_ISREQUIRED, "1" );
+                mapAttributsList.put( DocumentRestConstants.ATTRIBUTS_ISREQUIRED, "1" );
             }
             else
             {
-            	mapAttributsList.put( DocumentRestConstants.ATTRIBUTS_ISREQUIRED, "0" );
+                mapAttributsList.put( DocumentRestConstants.ATTRIBUTS_ISREQUIRED, "0" );
             }
-            XmlUtil.beginElement( sbXml, DocumentRestConstants.TAG_CREATE_DOCUMENT_FIELDS_FORM_ATTRIBUT,
-                mapAttributsList );
+            XmlUtil.beginElement( sbXml, DocumentRestConstants.TAG_CREATE_DOCUMENT_FIELDS_FORM_ATTRIBUT, mapAttributsList );
 
-            List<AttributeTypeParameter> listAttributeTypeParameter = (List<AttributeTypeParameter>) DocumentAttributeHome.getAttributeParametersValues( documentAttribute.getId(  ),
-                    LocaleBeanUtils.getDefaultLocale(  ) );
+            List<AttributeTypeParameter> listAttributeTypeParameter = (List<AttributeTypeParameter>) DocumentAttributeHome.getAttributeParametersValues(
+                    documentAttribute.getId( ), LocaleBeanUtils.getDefaultLocale( ) );
 
-            if ( ( listAttributeTypeParameter != null ) && !listAttributeTypeParameter.isEmpty(  ) )
+            if ( ( listAttributeTypeParameter != null ) && !listAttributeTypeParameter.isEmpty( ) )
             {
                 for ( AttributeTypeParameter attributeTypeParameter : listAttributeTypeParameter )
                 {
-                    Map<String, String> mapParametersAttributsList = new HashMap<String, String>(  );
-                    mapParametersAttributsList.put( DocumentRestConstants.ATTRIBUTS_NAME, attributeTypeParameter.getName(  ) );
-                    XmlUtil.beginElement( sbXml,
-                        DocumentRestConstants.TAG_CREATE_DOCUMENT_FIELDS_FORM_PARAMETER_ATTRIBUT,
-                        mapParametersAttributsList );
+                    Map<String, String> mapParametersAttributsList = new HashMap<String, String>( );
+                    mapParametersAttributsList.put( DocumentRestConstants.ATTRIBUTS_NAME, attributeTypeParameter.getName( ) );
+                    XmlUtil.beginElement( sbXml, DocumentRestConstants.TAG_CREATE_DOCUMENT_FIELDS_FORM_PARAMETER_ATTRIBUT, mapParametersAttributsList );
 
-                    if ( ( attributeTypeParameter.getValueList(  ) != null ) &&
-                            !attributeTypeParameter.getValueList(  ).isEmpty(  ) )
+                    if ( ( attributeTypeParameter.getValueList( ) != null ) && !attributeTypeParameter.getValueList( ).isEmpty( ) )
                     {
-                        for ( String strValueParameter : attributeTypeParameter.getValueList(  ) )
+                        for ( String strValueParameter : attributeTypeParameter.getValueList( ) )
                         {
-                            XmlUtil.addElement( sbXml,
-                                DocumentRestConstants.TAG_CREATE_DOCUMENT_FIELDS_FORM_PARAMETER_ATTRIBUT_VALUE,
-                                strValueParameter );
+                            XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_CREATE_DOCUMENT_FIELDS_FORM_PARAMETER_ATTRIBUT_VALUE, strValueParameter );
                         }
                     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2014, Mairie de Paris
+ * Copyright (c) 2002-2018, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -43,19 +43,17 @@ import org.apache.commons.lang.StringUtils;
 
 import java.util.List;
 
-
 /**
  * AttributeFormatterXml
  */
 public class AttributeFormatterXml implements IFormatter<DocumentAttribute>
 {
     /**
-    * {@inheritDoc}
-    */
+     * {@inheritDoc}
+     */
     public String format( DocumentAttribute resource )
     {
-        StringBuffer sbXml = new StringBuffer( AppPropertiesService.getProperty( 
-                    DocumentRestConstants.PROPERTIES_XML_HEADER ) );
+        StringBuffer sbXml = new StringBuffer( AppPropertiesService.getProperty( DocumentRestConstants.PROPERTIES_XML_HEADER ) );
         XmlUtil.beginElement( sbXml, DocumentRestConstants.TAG_RESPONSE );
         XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_STATUS, DocumentRestConstants.STATUS_SUCCESS );
 
@@ -63,18 +61,20 @@ public class AttributeFormatterXml implements IFormatter<DocumentAttribute>
 
         XmlUtil.endElement( sbXml, DocumentRestConstants.TAG_RESPONSE );
 
-        return sbXml.toString(  );
+        return sbXml.toString( );
     }
 
     /**
-         * Format DocumentAttribute
-         * @param listResources resources list
-         * @param referenceItem referenceItem
-         */
+     * Format DocumentAttribute
+     * 
+     * @param listResources
+     *            resources list
+     * @param referenceItem
+     *            referenceItem
+     */
     public String format( List<DocumentAttribute> listResources )
     {
-        StringBuffer sbXml = new StringBuffer( AppPropertiesService.getProperty( 
-                    DocumentRestConstants.PROPERTIES_XML_HEADER ) );
+        StringBuffer sbXml = new StringBuffer( AppPropertiesService.getProperty( DocumentRestConstants.PROPERTIES_XML_HEADER ) );
         XmlUtil.beginElement( sbXml, DocumentRestConstants.TAG_RESPONSE );
         XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_STATUS, DocumentRestConstants.STATUS_SUCCESS );
         XmlUtil.beginElement( sbXml, DocumentRestConstants.TAG_ATTRIBUTES );
@@ -87,7 +87,7 @@ public class AttributeFormatterXml implements IFormatter<DocumentAttribute>
         XmlUtil.beginElement( sbXml, DocumentRestConstants.TAG_ATTRIBUTES );
         XmlUtil.endElement( sbXml, DocumentRestConstants.TAG_RESPONSE );
 
-        return sbXml.toString(  );
+        return sbXml.toString( );
     }
 
     /**
@@ -98,11 +98,11 @@ public class AttributeFormatterXml implements IFormatter<DocumentAttribute>
         if ( attribute != null )
         {
             XmlUtil.beginElement( sbXml, DocumentRestConstants.TAG_ATTRIBUTE );
-            XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_ATTRIBUTE_ID, attribute.getId(  ) );
-            XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_CODE_ATTRIBUTE_TYPE, attribute.getCodeAttributeType(  ) );
-            XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_CODE_ATTRIBUTE, attribute.getCode(  ) );
-            XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_DOCUMENT_TYPE_ATTRIBUTE_NAME, attribute.getName(  ) );
-            XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_ATTRIBUTE_DESCRIPTION, attribute.getDescription(  ) );
+            XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_ATTRIBUTE_ID, attribute.getId( ) );
+            XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_CODE_ATTRIBUTE_TYPE, attribute.getCodeAttributeType( ) );
+            XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_CODE_ATTRIBUTE, attribute.getCode( ) );
+            XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_DOCUMENT_TYPE_ATTRIBUTE_NAME, attribute.getName( ) );
+            XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_ATTRIBUTE_DESCRIPTION, attribute.getDescription( ) );
             XmlUtil.endElement( sbXml, DocumentRestConstants.TAG_ATTRIBUTE );
         }
     }

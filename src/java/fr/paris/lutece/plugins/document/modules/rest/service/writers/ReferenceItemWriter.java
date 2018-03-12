@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2014, Mairie de Paris
+ * Copyright (c) 2002-2018, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -51,15 +51,15 @@ import fr.paris.lutece.util.ReferenceItem;
  *
  */
 @Provider
-@Produces( {MediaType.APPLICATION_XML,
-    MediaType.APPLICATION_JSON
+@Produces( {
+        MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON
 } )
 public class ReferenceItemWriter extends AbstractWriter<ReferenceItemWriter>
 {
-	/**
+    /**
      * {@inheritDoc}
      */
-    public boolean isWriteable( Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType )
+    public boolean isWriteable( Class<?> type, Type genericType, Annotation [ ] annotations, MediaType mediaType )
     {
         // Ensure that we're handling only List<Directory> objects.
         boolean isWritable = false;
@@ -72,8 +72,8 @@ public class ReferenceItemWriter extends AbstractWriter<ReferenceItemWriter>
         if ( List.class.isAssignableFrom( type ) && genericType instanceof ParameterizedType )
         {
             ParameterizedType parameterizedType = (ParameterizedType) genericType;
-            Type[] actualTypeArgs = ( parameterizedType.getActualTypeArguments(  ) );
-            isWritable = ( ( actualTypeArgs.length == 1 ) && actualTypeArgs[0].equals( ReferenceItem.class ) );
+            Type [ ] actualTypeArgs = ( parameterizedType.getActualTypeArguments( ) );
+            isWritable = ( ( actualTypeArgs.length == 1 ) && actualTypeArgs [0].equals( ReferenceItem.class ) );
         }
 
         return isWritable;

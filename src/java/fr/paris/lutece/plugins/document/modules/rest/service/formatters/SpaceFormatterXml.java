@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2014, Mairie de Paris
+ * Copyright (c) 2002-2018, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -43,19 +43,17 @@ import org.apache.commons.lang.StringUtils;
 
 import java.util.List;
 
-
 /**
  * SpaceFormatterXml
  */
 public class SpaceFormatterXml implements IFormatter<DocumentSpace>
 {
     /**
-    * {@inheritDoc}
-    */
+     * {@inheritDoc}
+     */
     public String format( DocumentSpace resource )
     {
-        StringBuffer sbXml = new StringBuffer( AppPropertiesService.getProperty( 
-                    DocumentRestConstants.PROPERTIES_XML_HEADER ) );
+        StringBuffer sbXml = new StringBuffer( AppPropertiesService.getProperty( DocumentRestConstants.PROPERTIES_XML_HEADER ) );
         XmlUtil.beginElement( sbXml, DocumentRestConstants.TAG_RESPONSE );
         XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_STATUS, DocumentRestConstants.STATUS_SUCCESS );
 
@@ -63,18 +61,20 @@ public class SpaceFormatterXml implements IFormatter<DocumentSpace>
 
         XmlUtil.endElement( sbXml, DocumentRestConstants.TAG_RESPONSE );
 
-        return sbXml.toString(  );
+        return sbXml.toString( );
     }
 
     /**
-         * Format DocumentSpace
-         * @param listResources resources list
-         * @param referenceItem referenceItem
-         */
+     * Format DocumentSpace
+     * 
+     * @param listResources
+     *            resources list
+     * @param referenceItem
+     *            referenceItem
+     */
     public String format( List<DocumentSpace> listResources )
     {
-        StringBuffer sbXml = new StringBuffer( AppPropertiesService.getProperty( 
-                    DocumentRestConstants.PROPERTIES_XML_HEADER ) );
+        StringBuffer sbXml = new StringBuffer( AppPropertiesService.getProperty( DocumentRestConstants.PROPERTIES_XML_HEADER ) );
         XmlUtil.beginElement( sbXml, DocumentRestConstants.TAG_RESPONSE );
         XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_STATUS, DocumentRestConstants.STATUS_SUCCESS );
         XmlUtil.beginElement( sbXml, DocumentRestConstants.TAG_SPACES );
@@ -87,7 +87,7 @@ public class SpaceFormatterXml implements IFormatter<DocumentSpace>
         XmlUtil.beginElement( sbXml, DocumentRestConstants.TAG_SPACES );
         XmlUtil.endElement( sbXml, DocumentRestConstants.TAG_RESPONSE );
 
-        return sbXml.toString(  );
+        return sbXml.toString( );
     }
 
     /**
@@ -98,46 +98,44 @@ public class SpaceFormatterXml implements IFormatter<DocumentSpace>
         if ( space != null )
         {
             XmlUtil.beginElement( sbXml, DocumentRestConstants.TAG_SPACE );
-            XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_SPACE_ID, space.getId(  ) );
-            XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_SPACE_ID_PARENT, space.getIdParent(  ) );
+            XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_SPACE_ID, space.getId( ) );
+            XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_SPACE_ID_PARENT, space.getIdParent( ) );
 
-            if ( StringUtils.isNotBlank( space.getName(  ) ) )
+            if ( StringUtils.isNotBlank( space.getName( ) ) )
             {
-                XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_SPACE_NAME, space.getName(  ) );
+                XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_SPACE_NAME, space.getName( ) );
             }
 
-            if ( StringUtils.isNotBlank( space.getDescription(  ) ) )
+            if ( StringUtils.isNotBlank( space.getDescription( ) ) )
             {
-                XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_SPACE_DESCRIPTION, space.getDescription(  ) );
+                XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_SPACE_DESCRIPTION, space.getDescription( ) );
             }
 
-            if ( StringUtils.isNotBlank( space.getViewType(  ) ) )
+            if ( StringUtils.isNotBlank( space.getViewType( ) ) )
             {
-                XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_SPACE_VIEW_TYPE, space.getViewType(  ) );
+                XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_SPACE_VIEW_TYPE, space.getViewType( ) );
             }
 
-            XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_SPACE_ID_ICON, space.getIdIcon(  ) );
+            XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_SPACE_ID_ICON, space.getIdIcon( ) );
 
-            if ( StringUtils.isNotBlank( space.getIconUrl(  ) ) )
+            if ( StringUtils.isNotBlank( space.getIconUrl( ) ) )
             {
-                XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_SPACE_ICON_URL, space.getIconUrl(  ) );
+                XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_SPACE_ICON_URL, space.getIconUrl( ) );
             }
 
             XmlUtil.beginElement( sbXml, DocumentRestConstants.TAG_SPACE_ALLOWED_DOCUMENT_TYPES );
 
-            for ( int i = 0; i < space.getAllowedDocumentTypes(  ).length; i++ )
+            for ( int i = 0; i < space.getAllowedDocumentTypes( ).length; i++ )
             {
-                XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_SPACE_DOCUMENT_TYPE,
-                    space.getAllowedDocumentTypes(  )[i] );
+                XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_SPACE_DOCUMENT_TYPE, space.getAllowedDocumentTypes( ) [i] );
             }
 
             XmlUtil.endElement( sbXml, DocumentRestConstants.TAG_SPACE_ALLOWED_DOCUMENT_TYPES );
-            XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_SPACE_DOCUMENT_CREATION_ALLOWED,
-                String.valueOf( space.isDocumentCreationAllowed(  ) ) );
+            XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_SPACE_DOCUMENT_CREATION_ALLOWED, String.valueOf( space.isDocumentCreationAllowed( ) ) );
 
-            if ( StringUtils.isNotBlank( space.getWorkgroup(  ) ) )
+            if ( StringUtils.isNotBlank( space.getWorkgroup( ) ) )
             {
-                XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_SPACE_WORKGROUP, space.getWorkgroup(  ) );
+                XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_SPACE_WORKGROUP, space.getWorkgroup( ) );
             }
 
             XmlUtil.endElement( sbXml, DocumentRestConstants.TAG_SPACE );

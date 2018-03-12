@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2014, Mairie de Paris
+ * Copyright (c) 2002-2018, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -32,7 +32,6 @@
  * License 1.0
  */
 package fr.paris.lutece.plugins.document.modules.rest.util.constants;
-
 
 /**
  *
@@ -129,7 +128,7 @@ public class DocumentRestConstants
     public static final String TAG_DOCUMENTS_PUBLICATION = "documents-publication";
     public static final String TAG_DOCUMENT_PUBLICATION = "document-publication";
 
-    //MAP ATTRIBUTS    
+    // MAP ATTRIBUTS
     public static final String ATTRIBUTS_PORTLET_ID = "portlet-id";
     public static final String ATTRIBUTS_STATUS = "status";
     public static final String ATTRIBUTS_NAME = "name";
@@ -196,7 +195,7 @@ public class DocumentRestConstants
     /**
      * Private constructor
      */
-    private DocumentRestConstants(  )
+    private DocumentRestConstants( )
     {
     }
 }

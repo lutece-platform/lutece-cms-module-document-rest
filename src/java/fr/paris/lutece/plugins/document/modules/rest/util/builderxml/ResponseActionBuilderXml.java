@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2014, Mairie de Paris
+ * Copyright (c) 2002-2018, Mairie de Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -44,34 +44,36 @@ import fr.paris.lutece.util.xml.XmlUtil;
  */
 public class ResponseActionBuilderXml
 {
-	/**
-	 * Constructor
-	 */
-    ResponseActionBuilderXml(  )
+    /**
+     * Constructor
+     */
+    ResponseActionBuilderXml( )
     {
     }
 
     /**
      * Build the success Response XML
+     * 
      * @return the success Response XML
      */
-    public static String getSuccessResponseActionXML(  )
+    public static String getSuccessResponseActionXML( )
     {
         StringBuffer sbXml = new StringBuffer( AppPropertiesService.getProperty( DocumentRestConstants.PROPERTIES_XML_HEADER ) );
         XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_STATUS, DocumentRestConstants.STATUS_SUCCESS );
 
-        return sbXml.toString(  );
+        return sbXml.toString( );
     }
 
     /**
      * Build the failure Response XML
+     * 
      * @return the failure Response XML
      */
-    public static String getFailureResponseActionXML(  )
+    public static String getFailureResponseActionXML( )
     {
         StringBuffer sbXml = new StringBuffer( AppPropertiesService.getProperty( DocumentRestConstants.PROPERTIES_XML_HEADER ) );
         XmlUtil.addElement( sbXml, DocumentRestConstants.TAG_STATUS, DocumentRestConstants.STATUS_FAILURE );
 
-        return sbXml.toString(  );
+        return sbXml.toString( );
     }
 }
